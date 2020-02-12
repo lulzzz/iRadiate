@@ -1,19 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.Common", "iRadiate.Common", "{D4263D47-4DA6-459A-95C9-7DFE07AD1767}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{D4263D47-4DA6-459A-95C9-7DFE07AD1767}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.DataModel", "iRadiate.DataModel", "{7956F0CB-3CBB-440D-BF6D-B51241F5FCFC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataModel", "DataModel", "{7956F0CB-3CBB-440D-BF6D-B51241F5FCFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRadiate.DataModel", "iRadiate.DataMode.Common\iRadiate.DataModel.csproj", "{FC11D2B2-F184-45B7-A1AA-8D9B342FB0C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.Desktop", "iRadiate.Desktop", "{6F4DFE74-3279-48D5-932F-1C45838FF6D1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{6F4DFE74-3279-48D5-932F-1C45838FF6D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.Whiteboard", "iRadiate.Whiteboard", "{7D3290FB-B573-461B-B993-C9EDD9A61040}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.Diary", "iRadiate.Diary", "{4D9025D1-B086-4B02-A6E3-D6A0C2DE8820}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.QA", "iRadiate.QA", "{F17B6883-0ADE-41B0-B38A-C01B6CAABC2A}"
 EndProject
@@ -33,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRadiate.Common", "iRadiate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRadiate.Diary.Common", "iRadiate.Diary.Common\iRadiate.Diary.Common.csproj", "{04F9C57E-7FA5-4B5E-9A46-76CE9CCB77A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iRadiate.Interfaces", "iRadiate.Interfaces", "{DB34FCF0-1676-4A11-A6D0-1BC360C8FF5E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{DB34FCF0-1676-4A11-A6D0-1BC360C8FF5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRadiate.Interfaces.Launcher", "iRadiate.Interfaces.Test\iRadiate.Interfaces.Launcher.csproj", "{E35C5B59-5F30-4A62-B6C6-E9A2985AFF6E}"
 EndProject
@@ -370,7 +368,6 @@ Global
 		{38BEC646-4C40-42AC-9CEE-13CD5DFFC1DF} = {2951F41A-0D2A-4AA2-803B-90C3F52C2CC1}
 		{3F252735-A863-4E7A-A6BF-E86550B91445} = {7D3290FB-B573-461B-B993-C9EDD9A61040}
 		{D6F76968-6939-4D1A-8DDC-887290C750BC} = {D4263D47-4DA6-459A-95C9-7DFE07AD1767}
-		{04F9C57E-7FA5-4B5E-9A46-76CE9CCB77A7} = {4D9025D1-B086-4B02-A6E3-D6A0C2DE8820}
 		{E35C5B59-5F30-4A62-B6C6-E9A2985AFF6E} = {DB34FCF0-1676-4A11-A6D0-1BC360C8FF5E}
 		{BB08240A-BB74-45FA-9E0A-95A6E88DD0B9} = {AB59D820-5948-408E-AC6F-F4722E89FBC2}
 		{FF9E2B35-FA68-4B7F-97BA-A3BBF59BBBBF} = {7956F0CB-3CBB-440D-BF6D-B51241F5FCFC}
@@ -386,94 +383,7 @@ Global
 		{2382EA97-3681-4AB2-88DE-25A1E5B69B4D} = {6F4DFE74-3279-48D5-932F-1C45838FF6D1}
 		{6D236BBD-0FF7-46F6-8284-DDA41C3EB2BD} = {D4263D47-4DA6-459A-95C9-7DFE07AD1767}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 22
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://nforwood.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = iRadiate.Desktop.Common\\iRadiate.Desktop.Common.csproj
-		SccProjectTopLevelParentUniqueName1 = iRadiate.sln
-		SccProjectName1 = iRadiate.Desktop.Common
-		SccLocalPath1 = iRadiate.Desktop.Common
-		SccProjectUniqueName2 = iRadiate.Desktop.Test\\iRadiate.Desktop.Test.csproj
-		SccProjectTopLevelParentUniqueName2 = iRadiate.sln
-		SccProjectName2 = iRadiate.Desktop.Test
-		SccLocalPath2 = iRadiate.Desktop.Test
-		SccProjectUniqueName3 = iRadiate.Settings.Common\\iRadiate.Settings.Common.csproj
-		SccProjectTopLevelParentUniqueName3 = iRadiate.sln
-		SccProjectName3 = iRadiate.Settings.Common
-		SccLocalPath3 = iRadiate.Settings.Common
-		SccProjectUniqueName4 = iRadiate.Whiteboard.Common\\iRadiate.Whiteboard.Common.csproj
-		SccProjectTopLevelParentUniqueName4 = iRadiate.sln
-		SccProjectName4 = iRadiate.Whiteboard.Common
-		SccLocalPath4 = iRadiate.Whiteboard.Common
-		SccProjectUniqueName5 = iRadiate.Common\\iRadiate.Common.csproj
-		SccProjectTopLevelParentUniqueName5 = iRadiate.sln
-		SccProjectName5 = iRadiate.Common
-		SccLocalPath5 = iRadiate.Common
-		SccProjectUniqueName6 = iRadiate.Diary.Common\\iRadiate.Diary.Common.csproj
-		SccProjectTopLevelParentUniqueName6 = iRadiate.sln
-		SccProjectName6 = iRadiate.Diary.Common
-		SccLocalPath6 = iRadiate.Diary.Common
-		SccProjectUniqueName7 = iRadiate.Scanbag.Common\\iRadiate.Scanbag.Common.csproj
-		SccProjectTopLevelParentUniqueName7 = iRadiate.sln
-		SccProjectName7 = iRadiate.Scanbag.Common
-		SccLocalPath7 = iRadiate.Scanbag.Common
-		SccProjectUniqueName8 = iRadiate.DataMode.Common\\iRadiate.DataModel.csproj
-		SccProjectTopLevelParentUniqueName8 = iRadiate.sln
-		SccProjectName8 = iRadiate.DataMode.Common
-		SccLocalPath8 = iRadiate.DataMode.Common
-		SccProjectUniqueName9 = iRadiate.DataModel.Test\\iRadiate.DataModel.Test.csproj
-		SccProjectTopLevelParentUniqueName9 = iRadiate.sln
-		SccProjectName9 = iRadiate.DataModel.Test
-		SccLocalPath9 = iRadiate.DataModel.Test
-		SccProjectUniqueName10 = iRadiate.Radiopharmacy\\iRadiate.Radiopharmacy.csproj
-		SccProjectTopLevelParentUniqueName10 = iRadiate.sln
-		SccProjectName10 = iRadiate.Radiopharmacy
-		SccLocalPath10 = iRadiate.Radiopharmacy
-		SccProjectUniqueName11 = iRadiate.Interfaces.Capintec\\iRadiate.Interfaces.Capintec.csproj
-		SccProjectTopLevelParentUniqueName11 = iRadiate.sln
-		SccProjectName11 = iRadiate.Interfaces.Capintec
-		SccLocalPath11 = iRadiate.Interfaces.Capintec
-		SccProjectUniqueName12 = CentricityInterface\\iRadiate.Interfaces.CentricityInterface.csproj
-		SccProjectTopLevelParentUniqueName12 = iRadiate.sln
-		SccProjectName12 = CentricityInterface
-		SccLocalPath12 = CentricityInterface
-		SccProjectUniqueName13 = iRadiate.Interfaces.Test\\iRadiate.Interfaces.Launcher.csproj
-		SccProjectTopLevelParentUniqueName13 = iRadiate.sln
-		SccProjectName13 = iRadiate.Interfaces.Test
-		SccLocalPath13 = iRadiate.Interfaces.Test
-		SccProjectUniqueName14 = iRadiate.Interfaces.DICOM\\iRadiate.Interfaces.DICOM.csproj
-		SccProjectTopLevelParentUniqueName14 = iRadiate.sln
-		SccProjectName14 = iRadiate.Interfaces.DICOM
-		SccLocalPath14 = iRadiate.Interfaces.DICOM
-		SccProjectUniqueName15 = DicomTest\\DicomTest.csproj
-		SccProjectTopLevelParentUniqueName15 = iRadiate.sln
-		SccProjectName15 = DicomTest
-		SccLocalPath15 = DicomTest
-		SccProjectUniqueName16 = iRadiate.Common.Text\\iRadiate.Common.Text.csproj
-		SccProjectTopLevelParentUniqueName16 = iRadiate.sln
-		SccProjectName16 = iRadiate.Common.Text
-		SccLocalPath16 = iRadiate.Common.Text
-		SccProjectUniqueName17 = CentricityQuery\\CentricityQuery.csproj
-		SccProjectTopLevelParentUniqueName17 = iRadiate.sln
-		SccProjectName17 = CentricityQuery
-		SccLocalPath17 = CentricityQuery
-		SccProjectUniqueName18 = iRadiate.QA\\iRadiate.QA.csproj
-		SccProjectTopLevelParentUniqueName18 = iRadiate.sln
-		SccProjectName18 = iRadiate.QA
-		SccLocalPath18 = iRadiate.QA
-		SccProjectUniqueName19 = iRadiate.Reporting\\Reporting.csproj
-		SccProjectTopLevelParentUniqueName19 = iRadiate.sln
-		SccProjectName19 = iRadiate.Reporting
-		SccLocalPath19 = iRadiate.Reporting
-		SccProjectUniqueName20 = Server\\Server.csproj
-		SccProjectTopLevelParentUniqueName20 = iRadiate.sln
-		SccProjectName20 = Server
-		SccLocalPath20 = Server
-		SccProjectUniqueName21 = iRadiate.Startup\\iRadiate.csproj
-		SccProjectTopLevelParentUniqueName21 = iRadiate.sln
-		SccProjectName21 = iRadiate.Startup
-		SccLocalPath21 = iRadiate.Startup
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE370CE1-89D4-4762-AC5B-AF8C2FD5D345}
 	EndGlobalSection
 EndGlobal

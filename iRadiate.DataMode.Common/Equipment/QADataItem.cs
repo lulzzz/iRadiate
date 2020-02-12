@@ -13,7 +13,7 @@ namespace iRadiate.DataModel.Equipment
     public class QADataItem : BaseDataItem
     {
         private EquipmentItem _equipmentItem;
-        private QAFormInstance _qaFormInstance;
+        //private QAFormInstance _qaFormInstance;
 
         public QADataItem() : base()
         {
@@ -26,17 +26,17 @@ namespace iRadiate.DataModel.Equipment
             set { _equipmentItem = value; }
         } 
 
-        public virtual QAFormInstance QAFormInstance
-        {
-            get
-            {
-                return _qaFormInstance;
-            }
-            set
-            {
-                _qaFormInstance = value;
-            }
-        }
+        //public virtual QAFormInstance QAFormInstance
+        //{
+        //    get
+        //    {
+        //        return _qaFormInstance;
+        //    }
+        //    set
+        //    {
+        //        _qaFormInstance = value;
+        //    }
+        //}
 
     }
 
