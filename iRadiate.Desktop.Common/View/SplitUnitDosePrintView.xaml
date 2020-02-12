@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.View.SplitUnitDosePrintView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iRadiate.Desktop.Common.View"
+              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:CompletionDetailsConverter x:Key="CompletionDetailsConverter"/>
+        <local:CompletionUserConverter x:Key="CompletionUserConverter"/>
+    </UserControl.Resources>
+    <DockPanel Name="MainDockPanel">
+
+        <Grid DockPanel.Dock="Top" Name="LabelGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="164"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+
+            </Grid.RowDefinitions>
+            <Label Content="Unit dose" FontSize="14" FontWeight="Light" Grid.Row="0" Grid.Column="0" Margin="0" Padding="0" VerticalAlignment="Center"/>
+            <Label Content="Drug" FontSize="12" FontWeight="Light" Grid.Row="6" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Activity" FontSize="12" FontWeight="Light" Grid.Row="7" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Date" FontSize="12" FontWeight="Light" Grid.Row="8" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Patient" FontSize="12" FontWeight="Light" Grid.Row="1" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="MRN" FontSize="12" FontWeight="Light" Grid.Row="3" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="DOB" FontSize="12" FontWeight="Light" Grid.Row="2" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Study" FontSize="12" FontWeight="Light" Grid.Row="4" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Task" FontSize="12" FontWeight="Light" Grid.Row="5" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Admin Time" FontSize="12" FontWeight="Light" Grid.Row="9" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Admin Tech" FontSize="12" FontWeight="Light" Grid.Row="10" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>
+            <Label Content="Net Injected (MBq)" FontSize="12" FontWeight="Light" Grid.Row="10" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0" Visibility="Collapsed"/>
+            <!--<Label Content="Residual Date" FontSize="12" FontWeight="Light" Grid.Row="11" Grid.Column="0" FontStyle="Normal" VerticalAlignment="Center" Padding="0"/>-->
+
+            <TextBlock Text="{Binding Path=Item.Radiopharmaceutical.Name}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=ActivityString}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Name="PreCalTimeBox" Text="{Binding Path=PreCalTime,ConverterCulture='en-AU'}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" Margin="2" Visibility="Collapsed"/>
+            <controls:DateTimePicker Name="PreCalTimePicker" SelectedDate="{Binding Path=PreCalTime,ConverterCulture='en-AU'}" BorderThickness="0" FontWeight="Light" FontSize="12" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" Margin="2" Visibility="Visible"/>
+            <TextBlock Text="{Binding Path=Item.Patient.FullName}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=Item.Patient.MRN}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=AssignedTask.Appointment.Name}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=AssignedTask.TaskName}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=Item.Patient.DateOfBirth,StringFormat=d,ConverterCulture='en-AU'}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock Text="{Binding Path=Item.ID}" FontWeight="SemiBold" FontSize="10" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="2"/>
+            <TextBlock  FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" Margin="2" Text="{Binding Path=Item,Converter={StaticResource CompletionDetailsConverter}}"/>
+            <TextBlock  FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Margin="2" Text="{Binding Path=Item,Converter={StaticResource CompletionUserConverter}}"/>
+            <TextBlock Text="{Binding Path=Item.DoseAdministrationTask.NetInjected,StringFormat=F0}" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Margin="2" Visibility="Collapsed"/>
+            <!--<TextBlock Text="02/11/2018 10:20 AM" FontWeight="SemiBold" FontSize="12" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" Margin="2"/>-->
+        </Grid>
+        <Button Name="PrintButton" 
+                Style="{DynamicResource AccentedSquareButtonStyle}"
+                DockPanel.Dock="Bottom"  Click="PrintButton_Click" VerticalAlignment="Top" HorizontalAlignment="Center">
+            Print
+        </Button>
+    </DockPanel>
+</UserControl>

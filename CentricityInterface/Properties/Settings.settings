@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="iRadiate.Interfaces.CentricityInterface.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="InterfaceConnString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=10.49.174.96\SQLEXPRESS;Database=CentricityInterface;User Id=sa;Password=mona^*vale1317</Value>
+    </Setting>
+    <Setting Name="CentricityConnString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DATA SOURCE=medora; PERSIST SECURITY INFO=True;USER ID=nmscript;Password=concordnms;Enlist=false;Self Tuning=false; Pooling=true; Connection Timeout=60;</Value>
+    </Setting>
+    <Setting Name="CentricityModuleLauncherVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CentricityModuleLauncherOrder" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

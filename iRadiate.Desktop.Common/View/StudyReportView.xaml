@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.View.StudyReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:xcad="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+              
+             mc:Ignorable="d" 
+             Width="700"
+             Height="1000"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <Style TargetType="Label" >
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="FontStyle" Value="Normal"/>
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MyTextBoxStyle}">
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="IsReadOnly" Value="{Binding Path=EditButtonVisible}"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="185"/>
+
+            </Style>
+            <Style TargetType="ComboBoxItem">
+                <Setter Property="Background" Value="White"/>
+            </Style>
+            <Style TargetType="ToggleButton" BasedOn="{StaticResource MyToggleButtonStyle}">
+
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MyComboBoxStyle}" >
+                <Setter Property="Background" Value="White"/>
+
+            </Style>
+            <Style TargetType="RowDefinition">
+                <Setter Property="Height" Value="34"/>
+
+            </Style>
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="208"/>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="208"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Report" Grid.Row="0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="18" FontWeight="SemiBold" Height="38" Width="75" BorderBrush="Transparent"/>
+        <Label Content="Patient" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="16" Height="33" Width="75" BorderBrush="Transparent"/>
+        <Label Content="Study" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="16" Width="75" Height="33" BorderBrush="Transparent"/>
+        <TextBlock HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=Patient.FullName,Mode=OneWay}"  Height="33" FontSize="16"  TextAlignment="Left" Padding="5" FontWeight="SemiBold"/>
+        <TextBlock FontWeight="SemiBold" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="{Binding Path=StudyName, Mode=OneWay}" TextAlignment="Left"  FontSize="16" Padding="5"/>
+        <Label BorderBrush="Transparent" Content="Study Date" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="33" />
+        <TextBlock FontWeight="SemiBold" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" 
+                   TextAlignment="Left"
+                   Text="{Binding Path=StudyDate,StringFormat={}{0: d/MM/yyyy},Mode=OneWay}"  VerticalAlignment="Center" Height="33" FontSize="16" Padding="5"/>
+        <Label BorderBrush="Transparent"  Content="Report Date" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center"  Height="33" Width="115" FontSize="16"/>
+        <TextBlock FontWeight="SemiBold"  HorizontalAlignment="Left"
+                   Grid.Row="3" Grid.Column="3"
+                   TextWrapping="Wrap" Text="{Binding Path=VerificationDate,StringFormat={}{0: dd/MM/yyyy H:mm tt},Mode=OneWay}" 
+                   VerticalAlignment="Center" TextAlignment="Left" Height="33" FontSize="16" Width="180" Padding="5"/>
+        <Label BorderBrush="Transparent" Content="Dictating Doctor" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Height="33" FontSize="16" Width="150"/>
+        <TextBlock FontWeight="SemiBold" HorizontalAlignment="Stretch" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=DictatingDoctor.FullNameWithTitle, Mode=OneWay}" 
+                   TextAlignment="Left"
+                   VerticalAlignment="Center" FontSize="16" Height="33" Padding="5"/>
+        <Label BorderBrush="Transparent" Content="Verifying Doctor" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Height="33" FontSize="16" Width="150"/>
+        <TextBlock FontWeight="SemiBold" HorizontalAlignment="Stretch" Grid.Row="4" Grid.Column="3" TextWrapping="Wrap" Text="{Binding Path=VerifyingDoctor.FullNameWithTitle, Mode=OneWay}" 
+                   TextAlignment="Center"
+                   VerticalAlignment="Center" FontSize="16" Height="33" Padding="5"/>
+        <FlowDocumentReader x:Name="FlowDocReader" Unloaded="FlowDocumentReader_Unloaded" 
+                            Grid.Row="5"
+                            Grid.ColumnSpan="4"
+                            BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="809" Width="680" 
+                            Document="{Binding Path=ReportDocument,Mode=OneWay}" ViewingMode="Scroll" IsPrintEnabled="True"/>
+
+    </Grid>
+</UserControl>

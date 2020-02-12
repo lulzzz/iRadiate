@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="iRadiate.Scanbag.Common.View.SummaryScanBagItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             
+             Margin="3"
+             HorizontalAlignment="Stretch"
+             d:DesignHeight="600" d:DesignWidth="730">
+    <UserControl.Resources>
+        <ResourceDictionary>
+           
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="IsReadOnly" Value="{Binding Path=ReadOnly}"/>
+            </Style>
+           
+            <Style TargetType="{x:Type ListBoxItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                        <Setter Property="Background" Value="{DynamicResource GrayBrush9}" />
+                    </Trigger>
+                
+                </Style.Triggers>
+                    </Style>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <TabControl>
+        <TabItem Header="Summary">
+            <DockPanel LastChildFill="True">
+                
+                    <StackPanel DockPanel.Dock="Top">
+                        
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5">
+                            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="Date" Margin="3"/>
+                            <TextBox IsReadOnly="True" BorderBrush="Transparent"  FontSize="14" FontWeight="Normal" Text="{Binding Path=Study.Date,StringFormat={}{0: dd-MMM-yyyy},Mode=OneWay}" VerticalAlignment="Center" Width="150" Margin="3"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="Study" Margin="3"/>
+                            <TextBox IsReadOnly="True"  FontSize="14" BorderBrush="Transparent" FontWeight="Normal" Text="{Binding Path=Study.Name,Mode=OneWay}" VerticalAlignment="Center" Width="350" Margin="3"/>
+                        </StackPanel>
+                    </StackPanel>
+
+               
+              
+               
+                    <StackPanel DockPanel.Dock="Top">
+                        <Label Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Content="Appointments"/>
+                        <ListBox ItemsSource="{Binding Path=AppointmentSummaries}" AlternationCount="2">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Width="150" Grid.RowSpan="2">
+                                        <StackPanel.LayoutTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </StackPanel.LayoutTransform>
+                                            <TextBlock  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                    <Run Text="Day "/>
+                                    <Run Text="{Binding Path=DayNumber}"/>
+                                            </TextBlock>
+                                            <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Center"   FontSize="16" Text="{Binding Path=AppointmentDate,StringFormat={}{0: dd/MM/yyyy}}" FontWeight="Normal" />
+                                        </StackPanel>
+                                        <Border BorderBrush="LightGray" BorderThickness="1" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1">
+                                            <StackPanel >
+
+                                            <Label FontWeight="SemiBold" Content="Comments" HorizontalAlignment="Left"/>
+                                            <TextBlock HorizontalAlignment="Stretch" Text="{Binding Path=Comments}" Margin="2"/>
+                                        </StackPanel>
+                                        </Border>
+                                    <Border BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" Grid.Column="1"
+                                                  Grid.Row="1" VerticalAlignment="Top">
+                                        <DataGrid AutoGenerateColumns="False" Grid.Column="1"
+                                                  Grid.Row="1"
+                                                  VerticalAlignment="Top"
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                                                  ItemsSource="{Binding Path=ProcedureEvents}" HeadersVisibility="None" IsReadOnly="True" FontSize="14" HorizontalAlignment="Stretch">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Path=ProcedureDate,StringFormat={}{0:h:mm tt}}" Width="100"/>
+                                                <DataGridTextColumn Binding="{Binding Path=Description}"/>
+                                                <DataGridCheckBoxColumn Binding="{Binding Path=Completed}"/>
+                                                <DataGridTextColumn Binding="{Binding Path=StaffMember}"/>
+                                            </DataGrid.Columns>
+                                            <DataGrid.RowDetailsTemplate>
+                                                <DataTemplate>
+
+
+                                                    <ContentControl Content="{Binding Path=Summary}" Margin="10,2,2,2"/>
+
+
+                                                </DataTemplate>
+                                            </DataGrid.RowDetailsTemplate>
+                                        </DataGrid>
+                                    </Border>
+                                        
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+
+                
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Request">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="650"/>                    
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="Bold" Content="Request" Visibility="Collapsed"/>
+                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="Referrer" />
+                <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" FontSize="14" FontWeight="Normal" 
+                         
+                         Text="{Binding Path=Study.Request.Referrer.FullName,Mode=OneWay}" IsReadOnly="True" BorderBrush="Transparent" VerticalAlignment="Top" Margin="3"/>
+                <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="History" />
+                <TextBox 
+            VerticalContentAlignment="Top"
+            Grid.Row="4" 
+            IsReadOnly="True" 
+            BorderBrush="Transparent"
+           
+            FontSize="12" FontWeight="Normal" Text="{Binding Path=Study.Request.PatientHistory,Mode=OneWay}" 
+                    VerticalAlignment="Top" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="3" Height="82"/>
+                <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="Clinical Info" />
+                <TextBox 
+            TextWrapping="Wrap" 
+            VerticalContentAlignment="Top"
+            IsReadOnly="True" 
+            BorderBrush="Transparent"
+            Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1" Height="100" 
+                    FontSize="12" FontWeight="Normal" Text="{Binding Path=Study.Request.ClinicalInfo,Mode=OneWay}" VerticalAlignment="Top" Margin="3"/>
+                <Label Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" FontSize="14" FontWeight="SemiBold" Content="Remark" />
+                <TextBox 
+            TextWrapping="Wrap" 
+            VerticalContentAlignment="Top"
+            IsReadOnly="True" 
+            BorderBrush="Transparent"
+            Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" Height="82" FontSize="12" FontWeight="Normal" Text="{Binding Path=Study.Request.RequestRemark,Mode=OneWay}" VerticalAlignment="Center" Margin="3"/>
+
+                
+              
+            </Grid>
+        </TabItem>
+        <TabItem Header="Images">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Style="{DynamicResource MetroFlatButtonStyle}"
+                        Background="Transparent"
+                        BorderBrush="LightGray"
+                        Margin="2"
+                        Padding="3"
+                        HorizontalAlignment="Left"
+VerticalAlignment="Center"
+                        Command="{Binding Path=LoadSelectedPatientImageCommand}"
+                        BorderThickness="1">
+                    <iconpacks:PackIconFontAwesome Kind="InfoSolid" Height="24" Width="24"/>
+                </Button>
+                <DataGrid Grid.Row="1"
+                    ItemsSource="{Binding Path=PatientImages}"
+                      SelectedItem="{Binding Path=SelectedPatientImage}"
+                      CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False"
+                      FontSize="14"
+                      AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=SeriesDateTime,ConverterCulture='en-AU'}" Header="Date"/>
+                        <DataGridTextColumn Binding="{Binding Path=ScanFinishedDateTime,ConverterCulture='en-AU'}" Header="Date"/>
+                        <DataGridTextColumn Binding="{Binding Path=SeriesDescription}" Header="Description"/>
+                        <DataGridTextColumn Binding="{Binding Path=ManufacturerModelName}" Header="Apparatus"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            
+        </TabItem>
+    </TabControl>
+    
+    
+        
+        
+        
+        
+        
+        
+    
+</UserControl>

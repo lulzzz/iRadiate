@@ -1,0 +1,61 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iRadiate.Desktop.Common.View" x:Class="iRadiate.Desktop.Common.View.NucMedPracticeView" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+    <Grid>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="68"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="64,13,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Rooms" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
+        <ListBox HorizontalAlignment="Left" Height="207" Margin="10,83,0,0" VerticalAlignment="Top" Width="280" ItemsSource="{Binding Rooms}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Name"/>
+                            <TextBox Text="{Binding Name}" BorderBrush="LightGray" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Occupancy" />
+                            <TextBox Text="{Binding MaximumOccupancy}" BorderBrush="LightGray"  />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TreeView x:Name="MyTreeView" HorizontalAlignment="Left" Margin="295,83,0,0" VerticalAlignment="Top" ItemsSource="{Binding Roles}" Width="272" Height="207" SelectedItemChanged="TreeView_SelectedItemChanged"
+                    >
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding ChildRoles}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+
+        </TreeView>
+        <Label Content="Roles" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="295,52,0,0" VerticalAlignment="Top"/>
+
+        <local:StaffMemberRoleView HorizontalAlignment="Left" Margin="295,295,0,0" VerticalAlignment="Top" DataContext="{Binding Path=SelectedStaffMemberRole}"/>
+        <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="339,55,0,0" VerticalAlignment="Top" Width="41" Height="23" Command="{Binding Path=AddRoleCommand}">
+            <Image Source="/iRadiate.Desktop.Common;component/Images/PlusIcon.png" Height="20" Width="20" />
+        </Button>
+        <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="380,55,0,0" VerticalAlignment="Top" Width="41" Height="23" Click="Button_Click">
+            <Image Source="/iRadiate.Desktop.Common;component/Images/ReloadIcon.png" Height="20" Width="20" />
+        </Button>
+        <ListBox HorizontalAlignment="Left" Height="207" Margin="576,83,0,0" VerticalAlignment="Top" Width="288" ItemsSource="{Binding Path=StudyTypes}" SelectedItem="{Binding Path=SelectedStudyType}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Study Types" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="576,52,0,0" VerticalAlignment="Top"/>
+        <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="656,55,0,0" VerticalAlignment="Top" Width="41" Height="23" Command="{Binding Path=AddStudyTypeCommand}">
+            <Image Source="/iRadiate.Desktop.Common;component/Images/PlusIcon.png" Height="20" Width="20" />
+        </Button>
+        <local:StudyTypeView HorizontalAlignment="Left" Margin="576,307,0,0" VerticalAlignment="Top" DataContext="{Binding Path=SelectedStudyType}"/>
+
+    </Grid>
+</UserControl>

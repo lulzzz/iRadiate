@@ -1,0 +1,642 @@
+﻿<UserControl xmlns:View="clr-namespace:iRadiate.Desktop.Common.View;assembly=iRadiate.Desktop.Common"  
+             x:Class="iRadiate.Desktop.Search.View.PatientDetailsView"
+             xmlns:v="clr-namespace:iRadiate.Desktop.Common.View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:xcad="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:conv="clr-namespace:iRadiate.Desktop.Common;assembly=iRadiate.Desktop.Common"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" HorizontalAlignment="Left"
+             d:DesignHeight="750" d:DesignWidth="1252">
+    <UserControl.Resources>
+        <ResourceDictionary>
+           
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <NullableBoolConverter x:Key="NullBoolToVis"/>
+            <CollectionViewSource x:Key="AllStudyTypes" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+   
+        
+            <Grid Background="{DynamicResource GrayBrush9}" 
+                  HorizontalAlignment="Stretch" 
+                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TabItem}},Path=ActualWidth}">
+                <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="750"/>
+            </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="DarkGray" 
+                    CornerRadius="10" 
+                        BorderThickness="1" 
+                        Margin="5" 
+                        Padding="3" 
+                        Background="White" 
+                        Height="864"  
+                        VerticalAlignment="Top" >
+                    <DockPanel LastChildFill="True">
+
+                    <Label DockPanel.Dock="Top" FontSize="18" FontWeight="SemiBold" Content="Patient"/>
+                    <v:PatientView DockPanel.Dock="Top" Height="500" VerticalAlignment="Top" />
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label FontSize="16" FontWeight="SemiBold" Content="Studies" DockPanel.Dock="Top"/>
+                        
+                    </StackPanel>
+                    
+                    <!--<Popup IsOpen="{Binding Path=StudyTypeSelectorPopupOpen}" PlacementTarget="{Binding ElementName=AddStudyButton}" Placement="Bottom" >
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <StackPanel Orientation="Vertical" Background="White">
+
+                                <TextBlock Text="Select type of study" FontSize="14" Margin="3"/>
+                                <ComboBox ItemsSource="{Binding Path=AvailableStudyTypes}" SelectedItem="{Binding Path=SelectedStudyType}" Width="150">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=Name}" FontSize="14"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Background="White" BorderBrush="DarkGray" BorderThickness="1" FontSize="14" Content="Cancel"  Width="50" Margin="3" HorizontalAlignment="Right" Command="{Binding Path=AddStudyCommand}"/>
+                                    <Button Background="White" BorderBrush="DarkGray" BorderThickness="1" FontSize="14" Content="Ok" Command="{Binding Path=StudyTypeSelectedCommand}" Width="50" Margin="3" HorizontalAlignment="Right"/>
+                                </StackPanel>
+
+
+                            </StackPanel>
+                        </Border>
+                    </Popup>-->
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
+                        <Button Style="{DynamicResource FlatButtonStyle}" 
+                                Margin="2"
+                                Padding="3"
+                                Background="Transparent"
+                                BorderBrush="LightGray"
+                        Command="{Binding Path=AddStudyCommand}" Name="AddStudyButton" >
+
+                            <!--<Image Source="/iRadiate.Desktop.Common;component/Images/PlusIcon.png" Height="26" Width="26"/>-->
+                            <iconPacks:Entypo Width="24" Height="24" Kind="AddToList"/>
+
+                        </Button>
+                    <Button Style="{DynamicResource FlatButtonStyle}" 
+                                Margin="2"
+                                Padding="3"
+                                Background="Transparent"
+                                BorderBrush="LightGray"
+                        Command="{Binding Path=ViewReportCommand}" Name="ViewReportButton" >
+
+                        <!--<Image Source="/iRadiate.Desktop.Common;component/Images/PlusIcon.png" Height="26" Width="26"/>-->
+                        <iconPacks:PackIconFontAwesome Width="24" Height="24" Kind="FileAltRegular"/>
+
+                    </Button>
+                </StackPanel>
+                    <DataGrid Name="StudiesGrid"
+                              ItemsSource="{Binding Path=Studies}" 
+                              SelectedItem="{Binding Path=SelectedStudy}" 
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False" 
+                              CanUserDeleteRows="False" 
+                                SelectionUnit="FullRow"
+                              RowHeaderWidth="0" 
+                              VerticalAlignment="Top"
+                              Margin="3"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" >
+                        
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=Item.Date,StringFormat={}{0:yyyy MMM dd},Mode=OneWay}" Header="Date" FontSize="14">
+                               
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Path=Item.Name,Mode=OneWay}" Header="Study" FontSize="14">
+                                
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </DockPanel>
+                </Border>
+                <Grid Grid.Column="1" 
+                      Visibility="{Binding Path=IsStudySelected,Converter={StaticResource BoolToVis}}" 
+                      Margin="0" 
+                      Height="864" 
+                      VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid DockPanel.Dock="Left" DataContext="{Binding Path=SelectedStudy}" Margin="0" Grid.Column="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="440"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" 
+                                BorderBrush="DarkGray" 
+                                CornerRadius="10" 
+                                BorderThickness="1" 
+                                Margin="5" 
+                                Padding="3" 
+                                Background="{StaticResource ControlBackgroundBrush}">
+                            <DockPanel  Margin="0,5,0,0" LastChildFill="False"  >
+                        <Label  Content="Study" DockPanel.Dock="Top" FontSize="18" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource AllStudyTypes}}" DockPanel.Dock="Top" 
+                                      FontSize="14"
+                              SelectedItem="{Binding Path=Item.StudyType}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            
+                            <Label FontSize="14" FontWeight="SemiBold" Content="Request" VerticalAlignment="Center" Margin="3" DockPanel.Dock="Top"/>
+                            <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                                <Label  FontWeight="Normal" Content="Referrer" Margin="2" Padding="1" VerticalAlignment="Center" FontSize="14"/>
+                                
+                                <TextBox Text="{Binding Path=Referrer.FullNameWithTitle,Mode=OneWay}" FontSize="14" Margin="2"/>
+                            </StackPanel>
+                            <Label FontWeight="Normal" 
+                                   Content="Patient History" 
+                                   FontSize="14"
+                                   VerticalAlignment="Center" Margin="2" Padding="1" DockPanel.Dock="Top"/>
+                            <TextBox 
+                                     FontWeight="Normal" 
+                             DockPanel.Dock="Top"
+                             Text="{Binding Path=PatientHistory,Mode=OneWay}" 
+                             
+                             AcceptsReturn="True"
+                             Height="200"
+                             TextWrapping="Wrap"
+                                 VerticalAlignment="Top" 
+                                VerticalContentAlignment="Top"
+                                 HorizontalAlignment="Stretch" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 
+                             ToolTipService.ShowOnDisabled="True"
+                             FontSize="14"
+                                 Margin="2">
+                                <TextBox.ToolTip>
+                                    <Border BorderBrush="Black" BorderThickness="1" Background="LightYellow" Padding="3" CornerRadius="2">
+                                        <TextBlock Text="{Binding Path=PatientHistory}" Width="200" Height="Auto" TextWrapping="Wrap"/>
+                                    </Border>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                        <Label  Content="Remarks" VerticalAlignment="Center" FontSize="14" Margin="2" Padding="1" DockPanel.Dock="Top" Visibility="Collapsed"/>
+                            <TextBox FontWeight="Normal" DockPanel.Dock="Top" Visibility="Collapsed"
+                             Text="{Binding Path=RisRemarks,Mode=OneWay}"
+                            FontSize="14"
+                             AcceptsReturn="True"
+                             Height="100"
+                             TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                             ToolTipService.ShowOnDisabled="True"
+                             
+                                VerticalContentAlignment="Top"
+                                 HorizontalAlignment="Left" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 Width="220" 
+                                 Margin="3">
+                                <TextBox.ToolTip>
+                                    <Border BorderBrush="Black" BorderThickness="1" Background="LightYellow" Padding="3" CornerRadius="2">
+                                        <TextBlock Text="{Binding Path=RisRemarks,Mode=OneWay}" Width="200" Height="Auto" TextWrapping="Wrap"/>
+                                    </Border>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                        <Label Content="Clinical Info" VerticalAlignment="Center" FontSize="14" Margin="2" Padding="1" DockPanel.Dock="Top"/>
+                            <TextBox FontWeight="Normal" 
+                                     DockPanel.Dock="Top"
+                             Text="{Binding Path=ClinicalInfo,Mode=OneWay}"
+                            FontSize="14"
+                             AcceptsReturn="True"
+                             Height="100"
+                             TextWrapping="Wrap"
+                                 VerticalAlignment="Top" 
+                             ToolTipService.ShowOnDisabled="True"
+                                VerticalContentAlignment="Top"
+                                 HorizontalAlignment="Stretch" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 
+                             
+                                 Margin="3">
+                                <TextBox.ToolTip>
+                                    <Border BorderBrush="Black" BorderThickness="1" Background="LightYellow" Padding="3" CornerRadius="2">
+                                        <TextBlock Text="{Binding Path=ClinicalInfo}" Width="200" Height="Auto" TextWrapping="Wrap"/>
+                                    </Border>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                            <Label FontSize="14" FontWeight="SemiBold" Content="Appointments" DockPanel.Dock="Top" VerticalAlignment="Center" Margin="2"/>
+                            <Button Style="{DynamicResource FlatButtonStyle}"
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="2" 
+                                    Padding="3"
+                                    Background="Transparent"  
+                                    BorderBrush="LightGray"
+                                Command="{Binding Path=AddAppointmentCommand}" 
+                                    Name="AddAppointmentButton" >
+                                <iconPacks:Entypo Kind="AddToList" Width="24" Height="24"/>
+
+                            </Button>
+
+                            <ListBox Height="100" ItemsSource="{Binding Path=Appointments}" SelectedItem="{Binding Path=SelectedAppointment}" DockPanel.Dock="Top">
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Setter Property="FontSize" Value="14"/>
+                                    </Style>
+                                </ListBox.Style>
+                                <ListBox.ItemTemplate>
+
+                                    <DataTemplate >
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding Path=Item.Name}" FontSize="14"/>
+                                            <TextBlock Text="{Binding Path=Item.ScheduledArrivalTime,StringFormat={}{0:yyyy MMM dd  HH:mm}}" FontSize="14"/>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            
+
+                        </DockPanel>
+
+                    </Border>
+                        <Border Grid.Column="1" 
+                                BorderBrush="DarkGray" 
+                                CornerRadius="10" 
+                                BorderThickness="1" 
+                                Margin="5" 
+                                Padding="3"  
+                                Width="430" 
+                                HorizontalAlignment="Left" 
+                                Visibility="{Binding Path=AppointmentSelected,Converter={StaticResource BoolToVis}}" Background="{StaticResource ControlBackgroundBrush}">
+                       
+                        <Grid  Width="Auto" DataContext="{Binding Path=SelectedAppointment}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition />
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" FontSize="18" FontWeight="SemiBold" Content="Appointment" />
+                            <TabControl Grid.Row="1" VerticalAlignment="Top">
+                                <TabItem Header="Info">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="Date/Time" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                                        <Controls:DateTimePicker Grid.Column="1" SelectedDate="{Binding Path=Item.ScheduledArrivalTime,ConverterCulture='en-AU'}" 
+                                                                 Margin="2"
+                                                                 FontSize="14"  VerticalAlignment="Center"/>
+                                        <Label Content="Name" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+                                        <TextBox VerticalAlignment="Center" 
+                                                 Margin="2"
+                                                 Text="{Binding Path=Item.Name,Mode=OneWay}" FontSize="14" Grid.Column="1" Grid.Row="1" BorderThickness="1" IsReadOnly="True" />
+                                        <Label Content="Status" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+                                        <TextBox Text="{Binding Path=Item.Status,Mode=OneWay}" 
+                                                 Margin="2"
+                                                 Grid.Column="1" Grid.Row="2" FontSize="14" FontWeight="SemiBold" IsReadOnly="True" />
+                                        <Label Content="Apt. Confirmed" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+                                        <CheckBox IsChecked="{Binding Path=Item.Confirmed}" 
+                                                 Margin="2"
+                                                  IsThreeState="False" Grid.Column="1" Grid.Row="3"/>
+                                        <Label Content="Confirmed by" 
+                                                Visibility="{Binding Path=Item.Confirmed, Converter={StaticResource BoolToVis}}"
+                                               FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="4"/>
+                                        <TextBox Text="{Binding Path=Item.ConfirmingUser.FullName, Mode=OneWay}" 
+                                                 Visibility="{Binding Path=Item.Confirmed, Converter={StaticResource BoolToVis}}"
+                                                 Grid.Column="1" Grid.Row="4" IsReadOnly="True"/>
+                                        <Label Content="Registered" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="5"/>
+                                        <CheckBox IsChecked="{Binding Path=Item.PatientRegistered}" 
+                                                  Margin="2"
+                                                  Grid.Column="1" Grid.Row="5"/>
+                                        <Label Content="Registration Time" 
+                                               Visibility="{Binding Path=Item.PatientRegistered, Converter={StaticResource BoolToVis}}"
+                                               FontSize="14" 
+                                               VerticalAlignment="Center" 
+                                               Grid.Column="0" 
+                                               Grid.Row="6"/>
+                                        <Controls:DateTimePicker Grid.Column="1" 
+                                                             Grid.Row="6" 
+                                                             SelectedDate="{Binding Path=Item.PatientRegistrationDate,ConverterCulture='en-AU'}" 
+                                                                Margin="2"
+                                                             Visibility="{Binding Path=Item.PatientRegistered, Converter={StaticResource BoolToVis}}"
+                                                             VerticalAlignment="Center"/>
+                                        <Label Content="Apt Duration" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="7"/>
+                                        <TextBox Text="{Binding Path=Item.AppointmentDurationText,Mode=OneWay}" Grid.Column="1" Grid.Row="7" FontSize="14" Margin="2" IsReadOnly="True"/>
+                                        <Label Content="Completed" FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="8"/>
+                                        <CheckBox IsChecked="{Binding Path=Item.Completed}" 
+                                                  Margin="2"
+                                                  Grid.Column="1" Grid.Row="8"/>
+                                        <Label Content="Completion Time"
+                                               Visibility="{Binding Path=Item.Completed, Converter={StaticResource BoolToVis}}"
+                                               FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="9"/>
+                                        <Controls:DateTimePicker Grid.Column="1" 
+                                                             Grid.Row="9" 
+                                                             Margin="2"
+                                                             SelectedDate="{Binding Path=Item.CompletionTime,ConverterCulture='en-AU'}" 
+                                                             
+                                                            
+                                                             Visibility="{Binding Path=Item.Completed, Converter={StaticResource BoolToVis}}"
+                                                             VerticalAlignment="Center"/>
+                                        <Label Content="Comments" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10" />
+                                        <TextBox AcceptsReturn="True" 
+                                                 Margin="2"
+                                                 TextWrapping="Wrap" Text="{Binding Path=Item.Comments}" Grid.Column="1" Grid.Row="10" Height="150"/>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="Task List">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                            <Button Style="{DynamicResource MetroFlatButtonStyle}" Name="AddTaskButton"
+                                                    Margin="2"
+                                                    Padding="3"
+                                                    Background="Transparent"
+                                                    BorderBrush="LightGray"
+                                                    Click="AddTaskButton_Click"
+                                                    >
+                                                <iconPacks:Entypo Kind="AddToList" Height="24" Width="24"/>
+                                            </Button>
+                                            <Button Style="{DynamicResource MetroFlatButtonStyle}" 
+                                                    Command="{Binding Path=ViewTaskCommand}"
+                                                    Margin="2"
+                                                    Padding="3"
+                                                    Background="Transparent"
+                                                    BorderBrush="LightGray"
+                                                    >
+                                                <iconPacks:FontAwesome Kind="InfoSolid" Height="24" Width="24"/>
+                                            </Button>
+                                        <Button Style="{DynamicResource MetroFlatButtonStyle}" 
+                                                    Command="{Binding Path=CancelTaskCommand}"
+                                                    Margin="2"
+                                                    Padding="3"
+                                                    Background="Transparent"
+                                                    BorderBrush="LightGray"
+                                                    >
+                                            <iconPacks:Modern Kind="Delete" Height="24" Width="24"/>
+                                        </Button>
+                                    </StackPanel>
+                                        <Expander Header="Insert Task" Visibility="Collapsed" Name="AddTaskExpander" Grid.Row="1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Content="Choose Task" FontSize="14" Grid.Row="0" Grid.Column="0"/>
+                                                <ComboBox Grid.Row="1" 
+                                                          Grid.Column="0"
+                                                          Height="35"
+                                                          Width="150"
+                                                          ItemsSource="{Binding Path=TaskTypes}"
+                                                          SelectedItem="{Binding Path=SelectedTaskType}"
+                                                          VerticalAlignment="Top"
+                                                          FontSize="14">
+                                                   
+                                                </ComboBox>
+                                                <Label Content="Time" FontSize="14" Grid.Row="0" Grid.Column="1"/>
+                                                <xcad:TimePicker FontSize="14" Format="ShortTime" Grid.Row="1" 
+                                                                 Value="{Binding Path=SelectedTaskTime}"
+                                                                 TimeInterval="00:15" Grid.Column="1" VerticalAlignment="Top" Height="35" Width="130"/>
+                                                <Button Style="{DynamicResource FlatButtonStyle}" 
+                                                        HorizontalAlignment="Left"
+                                                        Command="{Binding Path=AddTaskCommand}" Background="Transparent" BorderBrush="LightGray"  Grid.Row="1" Grid.Column="2" FontSize="14" Margin="2" Padding="3">
+                                                    <iconPacks:Modern Kind="ListAddBelow" Width="24" Height="24"/>
+                                                </Button>
+                                            </Grid>
+                                        </Expander>
+                                        <DataGrid Grid.Row="2"
+                                                  CanUserAddRows="False"
+                                                  ItemsSource="{Binding Path=TasksView}"
+                                                  
+                                                  SelectedItem="{Binding Path=SelectedTask}"
+                                                  GridLinesVisibility="Vertical"
+                                                  CanUserDeleteRows="False"
+                                                  AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Task" Binding="{Binding Path=TaskName}" FontSize="14" IsReadOnly="True"/>
+                                                <DataGridTextColumn Header="Time" Binding="{Binding Path=SchedulingTime,StringFormat=hh:mm tt}" FontSize="14" IsReadOnly="True"/>
+                                                <DataGridCheckBoxColumn Header="Completed" Binding="{Binding Path=Completed}" IsReadOnly="True"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="DiaryView" HorizontalAlignment="Stretch"  >
+
+                                    <ScrollViewer Name="DiaryScroller" BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1" HorizontalContentAlignment="Stretch" Width="400">
+                                        <Canvas Height="1200" HorizontalAlignment="Stretch">
+                                            
+                                        <Label Canvas.Top="52"  FontSize="10"
+                                                   Content="9:00 AM"/>
+                                        <Line 
+                                                Canvas.Top="70"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="192" FontSize="10"
+                                                   Content="10:00 AM"/>
+                                        <Line 
+                                                Canvas.Top="210"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="332" FontSize="10"
+                                                   Content="11:00 AM"/>
+                                        <Line 
+                                                Canvas.Top="350"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="474" FontSize="10"
+                                                   Content="12:00 PM"/>
+                                        <Line 
+                                                Canvas.Top="492"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>                                            
+                                        <Label Canvas.Top="614" FontSize="10"
+                                                   Content="1:00 PM"/>
+                                        <Line 
+                                                Canvas.Top="632"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="756" FontSize="10"
+                                                   Content="2:00 PM"/>
+                                        <Line 
+                                                Canvas.Top="774"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="898" FontSize="10"
+                                                   Content="3:00 PM"/>
+                                        <Line 
+                                                Canvas.Top="916"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <Label Canvas.Top="1041" FontSize="10"
+                                                   Content="4:00 PM"/>
+                                        <Line 
+                                                Canvas.Top="1059"   
+                                                X1="0"
+                                                  Y1="141"
+                                                  X2="100"
+                                                  Y2="141"
+                                                  Stroke="Gray"
+                                                  StrokeThickness="1"
+                                                    Opacity="0.5"
+                                                   Stretch="Fill"/>
+                                        <ItemsControl x:Name="_itemsControl"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Stretch"
+                                                   Width="400"
+                                                ItemsSource="{Binding Path=Tasks}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <xcad:TimelinePanel BeginDate="{Binding Path=DiaryStartTime}"
+                                                                    Orientation="Vertical"
+                                                                    EndDate="{Binding Path=DiaryEndTime}"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    VerticalAlignment="Stretch"
+                                                                    Margin="0"
+                                                                    Height="1200"
+                                                                    OverlapBehavior="Stretch"
+                                                                    CanVerticallyScroll="True"
+                                                                    ScrollViewer.CanContentScroll="True"
+                                                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                                                    Background="{DynamicResource GrayBrush9}"/>
+
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="{DynamicResource BlackBrush}"
+                                                        Background="{DynamicResource AccentColorBrush4}"
+                                                        CornerRadius="3"
+                                                        Padding="3">
+                                                        <Border.ToolTip>
+                                                            <Border BorderBrush="{StaticResource ControlBorderBrush}"
+                                                                Background="{StaticResource ControlBackgroundBrush}"
+                                                                Margin="3"
+                                                                Padding="3">
+                                                                <StackPanel Orientation="Horizontal" Margin="2">
+                                                                    <TextBlock Text="{Binding Path=TaskName, Mode=OneWay}"
+                                                             FontSize="14"
+                                                             
+                                                                />
+                                                                    <TextBlock Text=" "
+                                                             FontSize="14"
+                                                             
+                                                                />
+                                                                    <TextBlock Text="{Binding Path=SchedulingTime,StringFormat='H:mm tt', Mode=OneWay}"
+                                                             FontSize="14"
+                                                            
+                                                                />
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </Border.ToolTip>
+                                                        <StackPanel Orientation="Horizontal" Margin="2">
+                                                            <TextBlock Text="{Binding Path=TaskName, Mode=OneWay}"
+                                                             FontSize="10"
+                                                             
+                                                                />
+                                                            <TextBlock Text=" "
+                                                             FontSize="10"
+                                                             
+                                                                />
+                                                            <TextBlock Text="{Binding Path=SchedulingTime,StringFormat='H:mm tt', Mode=OneWay}"
+                                                             FontSize="10"
+                                                            
+                                                                />
+                                                        </StackPanel>
+                                                    </Border>
+
+
+
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style>
+                                                    <Setter Property="xcad:TimelinePanel.Date"
+                                                        Value="{Binding Path=ValidCommencementTime}"/>
+                                                    <Setter Property="xcad:TimelinePanel.DateEnd"
+                                                        Value="{Binding Path=ValidCompletionTime}" />
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                        </ItemsControl>
+                                    </Canvas>
+                                        
+                                    </ScrollViewer>
+                                </TabItem>
+                            </TabControl>
+                        <ContentControl 
+                                Grid.Row="2"
+                                Content="{StaticResource ButonStackPanel}"
+                                            HorizontalAlignment="Right"/>
+                    </Grid>
+                    </Border>
+                </Grid>
+            
+            </Grid>
+            </Grid>
+        
+   
+    
+</UserControl>

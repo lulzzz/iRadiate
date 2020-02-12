@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="iRadiate.Settings.Common.View.StudyTypesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+
+            <Style TargetType="DatePicker">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="185"/>
+
+            </Style>
+
+
+
+
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <Grid>
+        <DockPanel VerticalAlignment="Top" LastChildFill="True">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Style="{DynamicResource FlatButtonStyle}"
+                    Command="{Binding Path=AddNewStudyTypeCommand}"
+                   IsEnabled="{Binding Path=SelectedStudyType,Converter={StaticResource NullBooleanConverter}}"
+                    FontSize="14"
+                   Margin="2" Padding="3" BorderBrush="LightGray" BorderThickness="1" Background="Transparent"
+                    
+                    Visibility="Visible"
+                    HorizontalAlignment="Left"
+                    >
+                    <iconPacks:Entypo Width="24" Height="24" Kind="AddToList"/>
+                </Button>
+                <Button Background="Transparent"
+                                ToolTip="View Inventory Item"
+                                ToolTipService.ShowOnDisabled="True"
+                                Style="{DynamicResource FlatButtonStyle}"
+                                Click="Button_Click"
+                                IsEnabled="{Binding Path=SelectedUser,Converter={StaticResource NullBooleanConverter}}"
+                                Margin="2" Padding="3" BorderBrush="LightGray" BorderThickness="1"  >
+
+                    <iconPacks:FontAwesome Width="24" Height="24" Kind="InfoSolid" />
+                </Button>
+            </StackPanel>
+            
+           
+            <DataGrid DockPanel.Dock="Top"
+                      Name="StudyTypesGrid"
+                  FontSize="14"
+                  ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsSource="{Binding Path=StudyTypes}" 
+                      SelectedItem="{Binding Path=SelectedStudyType}"
+                  CanUserDeleteRows="False"
+                  CanUserAddRows="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding Path=Name}"
+                                    Width="75"/>
+                <DataGridTextColumn Header="Short Name"
+                                    Width="250"
+                                        Binding="{Binding Path=ShortName}"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+        </DockPanel>
+    </Grid>
+</UserControl>

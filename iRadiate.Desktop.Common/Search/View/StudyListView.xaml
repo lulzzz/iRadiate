@@ -1,0 +1,210 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Search.View.StudyListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xcad="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:desk="clr-namespace:iRadiate.Desktop.Common;assembly=iRadiate.Desktop.Common"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="IsReadOnly" Value="{Binding Path=ReadOnly}"/>
+            </Style>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <CollectionViewSource Source="{Binding Path=StudyTypes}" x:Key="StudyTypesView">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Name"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+            <CollectionViewSource Source="{Binding Path=RetrievedStudies}" x:Key="StudiesView">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="StudyDate" Direction="Ascending"/>
+                </CollectionViewSource.SortDescriptions>
+                
+            </CollectionViewSource>
+            <!--<desk:AvailableToOpacityConverter x:Key="AvailableToOpacityConverter"/>-->
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <xcad:BusyIndicator IsBusy="{Binding Path=Busy}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="190"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="135"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Label FontSize="20" FontWeight="SemiBold" Content="Search Critiera" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Date Range"/>
+                <Label Grid.Column="0" Grid.Row="2" Content="Study"/>
+                <StackPanel Orientation="Horizontal" Margin="3" Grid.Column="1" Grid.Row="1" >
+                    <ComboBox Width="155" FontSize="14" ItemsSource="{Binding Path=DateRanges}"
+                             
+                              SelectedItem="{Binding Path=SelectedDateRange}">
+                      
+                        
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                            Grid.Column="2" 
+                            Grid.Row="1" 
+                            Margin="3" 
+                            Grid.ColumnSpan="2"
+                            Visibility="{Binding Path=CustomDatesVisible,Converter={StaticResource BoolToVis}}">
+                    <Label FontSize="14" Content="Start Date"/>
+                    <DatePicker SelectedDate="{Binding Path=StartDate}" FontSize="14"/>
+                    <Label FontSize="14" Content="End Date"/>
+                    <DatePicker SelectedDate="{Binding Path=EndDate}" FontSize="14"/>
+                </StackPanel>
+                <ComboBox Grid.Column="1" 
+                          Grid.ColumnSpan="3" 
+                          Grid.Row="2" 
+                          Margin="3" 
+                          FontSize="14"
+                          SelectedItem="{Binding Path=SelectedStudyType}"
+                          ItemsSource="{Binding Source={StaticResource StudyTypesView}}" DisplayMemberPath="Name">
+                    
+                </ComboBox>
+                
+                <Button 
+                    Margin="3"
+                    Grid.Column="2" 
+                        Grid.Row="3" 
+                        Content="Search" 
+                    Command="{Binding Path=SearchCommand}"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" 
+                        FontSize="18"/> 
+            </Grid>
+            <ListBox Grid.Row="1" 
+                     ItemsSource="{Binding Path=StudyTools}" 
+                     BorderBrush="Transparent" 
+                     BorderThickness="0" 
+                     
+                     Background="Transparent"  >
+                <ListBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="0"/>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.Style>
+                    <Style TargetType="ListBox">
+                        <Setter Property="ItemsPanel">
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"/>
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    
+                </ListBox.Style>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="0"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    
+                    <DataTemplate>
+                        <Border Background="Transparent"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
+                                Padding="3"
+                                Margin="2"
+                                
+                                CornerRadius="0">
+                            <Button Command="{Binding Path=ExecuteCommand}"
+                                Style="{DynamicResource FlatButtonStyle}"
+                                 Padding="0"
+                                    Margin="0"
+                               BorderThickness="0"
+                                Background="Transparent"
+                                
+                                ToolTip="{Binding Path=Name}" 
+                                IsEnabled="{Binding Path=Available}"  >
+                                
+                               
+
+                                <ContentControl Content="{Binding Path=ContentSource}" >
+
+                                </ContentControl>
+                                <!--<Image Source="{Binding Path=IconSource}" Height="24" Width="24" />-->
+                            </Button>
+                        </Border>
+                       
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <DataGrid Grid.Row="2" 
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Path=StudiesView}" 
+                      SelectedItem="{Binding Path=SelectedStudy}"
+                      IsReadOnly="True" 
+                      SelectionChanged="DataGrid_SelectionChanged"
+                      GridLinesVisibility="All">
+                <DataGrid.ContextMenu>
+                    <ContextMenu HorizontalContentAlignment="Left" >
+                        <ListBox ItemsSource="{Binding Path=StudyTools}" HorizontalContentAlignment="Left">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding Path=ExecuteCommand}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                        <Image Width="28" Height="28" Source="{Binding Path=IconSource}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding Path=Name}" FontSize="14" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" CanUserResize="True" FontSize="14" Binding="{Binding Path=Date,StringFormat={}{0:dd/MM/yyyy h:mm tt}}" />
+                    <DataGridTextColumn Header="Surname" CanUserResize="True" FontSize="14" Binding="{Binding Path=Patient.Surname}"/>
+                    <DataGridTextColumn Header="Given names" CanUserResize="True" FontSize="14" Binding="{Binding Path=Patient.GivenNames}"/>
+                    <DataGridTextColumn Header="Study" CanUserResize="True" FontSize="14" Binding="{Binding Path=Name}"/>
+                    <DataGridTextColumn Header="Referrer" CanUserResize="True" FontSize="14" Binding="{Binding Path=Request.Referrer.FullName}"/>
+                    <DataGridTextColumn Header="Ward" CanUserResize="True" FontSize="14" Binding="{Binding Path=Ward.AbbreviatedFullName}"/>
+                    <DataGridTextColumn Header="Status" CanUserResize="True" FontSize="14" Binding="{Binding Path=Status}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </xcad:BusyIndicator>
+</UserControl>

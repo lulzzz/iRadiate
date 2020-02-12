@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.DataModel.Radiopharmacy.Generator" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECACBCAQAAABAAAAAABCAAAEDABAAABIAQIAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\Generator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.Elution" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAABQAAAAACAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\Generator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.BaseInventoryItem" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgoEACBIAAAEANQBAAIGCBCAAQAAACABIQAAIABCAAg=</HashCode>
+      <FileName>Radiopharmacy\IInventory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.BaseRadioactiveInventoryItem" Collapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAGAAAAAAAABAAEAEEQAAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\IInventory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.BaseUnitDose" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gFAAACACAABAABJEAAAAACAAAAAAEAAABAAABABBCAA=</HashCode>
+      <FileName>Radiopharmacy\UnitDose.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.SyringeUnitDose" Collapsed="true">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAACQAAAAAAAAAAAAAAAAAAAAAIAMACAAAA=</HashCode>
+      <FileName>Radiopharmacy\UnitDose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.CapsuleUnitDose" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\UnitDose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.GaseousUnitDose" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\UnitDose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.BaseBulkDose" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAACACAAAAAAAAADAAQAAACAQAEAQABAIAACDAAAQ=</HashCode>
+      <FileName>Radiopharmacy\BulkDose.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.Kit" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBIAAChCAAAAIBAAAAACAAAJAAAAAAAAIgBQAAAAAAU=</HashCode>
+      <FileName>Radiopharmacy\ColdKit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.ReconstitutedColdKit" Collapsed="true">
+    <Position X="11.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Radiopharmacy\BulkDose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.Radiopharmacy.SplitUnitDose" Collapsed="true">
+    <Position X="1" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Radiopharmacy\UnitDose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

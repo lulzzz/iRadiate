@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.DataModel.Common.DataStoreItem" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QARAAIFqAICAoIgGIABAFAICgQQAEBAQEBABIIAAABA=</HashCode>
+      <FileName>Common\DataStoreItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.Appointment" Collapsed="true">
+    <Position X="8" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAogAICeEKQSCAIGAQIBnKcgAAMYQEMEggIohgQBKBA=</HashCode>
+      <FileName>NucMed\Appointment.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.ArrivalTask" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAGAQAAAAIABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NucMed\ArrivalTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.BasicTask" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAsBMIAEISKgBCqMhBoQFFEM4AAAEBAAAqJB4AQAigA=</HashCode>
+      <FileName>NucMed\BasicTask.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.BasicFiniteTask" Collapsed="true">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAsAAAAEAACCAAqEAAAEAAAAgAAEAEAAAAAABKAAAAA=</HashCode>
+      <FileName>NucMed\BasicFiniteTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.BasicTaskType" Collapsed="true">
+    <Position X="4.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAIAAAAAAAIAAAAAAAIAQhAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>NucMed\BasicTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.NucMedPractice" Collapsed="true">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAIAAAAAAAAAAAAAABAAQCCgAAAgAAAgABAAAiAAA=</HashCode>
+      <FileName>NucMed\NucMedPractice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.Room" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAACAAgAAAAWSAAAEASAAAAAAQAAAAAAAAABAAA=</HashCode>
+      <FileName>NucMed\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.RoomReservation" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACEAAgAAAEABAAIAAAAAAAAgAAAAAAAAACAAA=</HashCode>
+      <FileName>NucMed\RoomReservation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.ScanTask" Collapsed="true">
+    <Position X="1" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAGQQoABAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NucMed\ScanTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.StandardFiniteTask" Collapsed="true">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAAAAQAAACAA=</HashCode>
+      <FileName>NucMed\StandardFiniteTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.StandardFiniteTaskType" Collapsed="true">
+    <Position X="10.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAgAAAEAAAgAAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>NucMed\StandardFiniteTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.StandardTask" Collapsed="true">
+    <Position X="6.5" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="iRadiate.DataModel.NucMed.BasicTask" ManuallyRouted="true">
+      <Path>
+        <Point X="6.25" Y="2.941" />
+        <Point X="6.25" Y="4.847" />
+        <Point X="7.25" Y="4.847" />
+        <Point X="7.25" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAGAQAgAAAABAAAAAAAAAAAAAAAAAAAQAAACAA=</HashCode>
+      <FileName>NucMed\StandardTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.StandardTaskType" Collapsed="true">
+    <Position X="12" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAgAAAEAAAgAAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>NucMed\StandardTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.Study" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgQIAAeRCgoACIARAAAgAUgQAIQhKAhBiJIAgABPIA=</HashCode>
+      <FileName>NucMed\Study.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.PatientImage" Collapsed="true">
+    <Position X="9" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EoRBiQACAAgAAECZQgFARgACQGgjEIICAABDAByCaCE=</HashCode>
+      <FileName>NucMed\PatientImage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.NMImage" Collapsed="true">
+    <Position X="10.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EKVAAIABAAyBSoGUcA4EACQCsSY2EBQCAgRAC4QAFhw=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.StaticNMImage" Collapsed="true">
+    <Position X="9.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.WholebodyNMImage" Collapsed="true">
+    <Position X="13.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACIAAAAAAAAAAAAAAAAAADAAAAAAAAAAYAAAA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.GatedNMImage" Collapsed="true">
+    <Position X="18.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAAAREAAAAIIAAACCEAQAAAgAEEAAAgBAAAAQAAAIA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.TomoNMImage" Collapsed="true">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEACAUAAAAAAAAAAAAAAEAASAQAIAAAAAAQAAAA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.SPECTNMImage" Collapsed="true">
+    <Position X="11.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAACAAAAAAAAAAAAIAAAAAASAIgAAAAAAAUAAAw=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.GatedSPECTImage" Collapsed="true">
+    <Position X="16" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.DynamicNMImage" Collapsed="true">
+    <Position X="20.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACCAAAAAAAAAAAAAAAAAAAAAEAAABAAAgAAAA=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.NMEnergyWindow" Collapsed="true">
+    <Position X="13.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAgAAAAAAQAAAAAAgAAAAACAAAAAAg=</HashCode>
+      <FileName>NucMed\NMImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.CTImage" Collapsed="true">
+    <Position X="8.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABABAAACJQDIAAAkABDIgAIEIBAACRggRQ=</HashCode>
+      <FileName>NucMed\CTImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.NucMed.DoseAdministrationTask" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAABSGAQACgAoABAAAAgAIAAAIAIAAAgAAAAAAAAA=</HashCode>
+      <FileName>NucMed\DoseAdministrationTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

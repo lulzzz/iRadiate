@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.Setup.GeneralSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iRadiate.Desktop.Common.Setup"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:Properties="clr-namespace:iRadiate.Desktop.Common.Properties"
+          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="700">
+    <TabControl>
+        <TabItem Header="Main">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="400"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                </Grid.RowDefinitions>
+                <!--<Label Content="General Settings" FontSize="16" FontWeight="SemiBold" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Padding="0" Margin="2" VerticalAlignment="Center"/>-->
+                <Label Content="Collapse Module Launcher" Grid.Column="0" Grid.Row="1" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <Controls:ToggleSwitch IsChecked="{Binding Source={x:Static Properties:Settings.Default},Path=ModuleLauncherCollapsed}"
+                                     OffLabel="No"
+                                      OnLabel="Yes"
+                                     Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                     Grid.Column="1" Grid.Row="1" Margin="2" HorizontalAlignment="Left"/>
+                <Button Style="{DynamicResource MetroFlatButtonStyle}" Background="Transparent" 
+                BorderBrush="LightGray" VerticalAlignment="Center"
+                Grid.Column="0" HorizontalAlignment="Left"  Command="{Binding Path=SaveCommand}" Grid.Row="0" Margin="2" Padding="3" >
+
+                    <iconPacks:Modern Kind="Save" Width="24" Height="24"/>
+
+
+                </Button>
+
+                <Label Content="Last Login Name" Grid.Column="0" Grid.Row="2" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox Text="{Binding Path=LastLoginName}" Grid.Column="1" Grid.Row="2" FontSize="14" HorizontalAlignment="Left" Width="150" Margin="2"/>
+                <Label Content="Accent" Grid.Column="0" Grid.Row="3" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <ComboBox ItemsSource="{Binding Path=AvailableAccents}" 
+                  DisplayMemberPath="Name"
+                  
+                  FontSize="14" Name="ColorComboBox" 
+                  SelectedItem="{Binding AccentColor}" 
+                  Grid.Column="1" Grid.Row="3" Margin="2" />
+                <Label Content="Show Library Notifications?" Grid.Column="0" Grid.Row="4" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <Controls:ToggleSwitch IsChecked="{Binding Source={x:Static Properties:Settings.Default},Path=ShowLibraryRefreshNotification}"
+                                     OffLabel="No"
+                                      OnLabel="Yes"
+                                     Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                     Grid.Column="1" Grid.Row="4" Margin="2" HorizontalAlignment="Left"/>
+
+                <Label Content="Trace level logging?" Grid.Column="0" Grid.Row="5" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <Controls:ToggleSwitch IsChecked="{Binding Source={x:Static Properties:Settings.Default},Path=TraceDebug}" 
+                               OffLabel="No"
+                                      OnLabel="Yes"
+                                     Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                               Grid.Column="1" Grid.Row="5" Margin="2" HorizontalAlignment="Left"/>
+
+                <Label Content="Confirm printer choice?" Grid.Column="0" Grid.Row="6" Margin="2" VerticalAlignment="Center" FontSize="14"/>
+                <Controls:ToggleSwitch Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}" Grid.Column="1" Grid.Row="6" Margin="2"
+                                       HorizontalAlignment="Left"
+                                       Width="85"
+                                       OnLabel="Yes"
+                                       OffLabel="Yes"
+                                       IsChecked="{Binding Path=ConfirmPrinterForLabels}"
+                                       VerticalAlignment="Center"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Modules">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Style="{DynamicResource MetroFlatButtonStyle}"
+                        Command="{Binding Path=SaveModuleLaunchersCommand}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        BorderBrush="LightGray"
+                        Background="Transparent"
+                        Margin="2"
+                        Padding="3">
+                    <iconPacks:Modern Kind="Save" Height="24" Width="24"/>
+                </Button>
+                <DataGrid Grid.Row="1"
+                          ItemsSource="{Binding Path=ModuleLaunchers}"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeColumns="True"
+                          AutoGenerateColumns="False"
+                          >
+                    <DataGrid.Columns>
+                        <Controls:DataGridNumericUpDownColumn Binding="{Binding Path=Order,UpdateSourceTrigger=PropertyChanged}"
+                                                              Header="Order"
+                                                              FontSize="14"
+                                                              />
+                        <DataGridTextColumn Binding="{Binding Path=Name}"
+                                            Header="Order"
+                                            FontSize="14"/>
+                        <DataGridCheckBoxColumn Binding="{Binding Path=Visible, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="Visible"
+                                                />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Account">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button 
+                    Grid.Row="0"
+                    Command="{Binding Path=SaveAccountCommand}"
+                    Style="{DynamicResource MetroFlatButtonStyle}"
+                        Margin="2"
+                        Padding="3"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                        Background="Transparent"
+                        BorderBrush="LightGray">
+                    <iconPacks:Modern Kind="Save" Width="24" Height="24"/>
+                </Button>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="Padding" Value="3"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="200"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="Padding" Value="3"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Content="Login Name" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Text="{Binding Path=LoginName}" Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Content="Surname" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Text="{Binding Path=Surname}" Grid.Row="2" Grid.Column="1"/>
+
+                    <Label Content="Given Names" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Text="{Binding Path=GivenNames}" Grid.Row="3" Grid.Column="1"/>
+
+                    <Label Content="Password" Grid.Row="4" Grid.Column="0"/>
+                    <PasswordBox Name="PasswordBox1" PasswordChanged="PasswordBox1_PasswordChanged" Grid.Row="4" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" Width="200" Margin="2" Padding="3" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Confirm password" Grid.Row="5" Grid.Column="0"/>
+                    <PasswordBox Name="PasswordBox2" PasswordChanged="PasswordBox2_PasswordChanged" Grid.Row="5" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" Width="200" Margin="2" Padding="3" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Grid>
+             
+            </Grid>
+        </TabItem>
+    </TabControl>
+   
+</UserControl>

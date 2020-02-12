@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.DataModel.DataDictionary.BaseDataItem" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAIACAAEABAIAAAEAAAAAAAAgAAAAAAAAAAgAAAIAA=</HashCode>
+      <FileName>DataDictionary\BaseDataItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.BooleanDataDictionaryEntry" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataDictionary\BooleanDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.DataDictionaryEntry" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAACAAAgAIAEAAAgAAQAAAAAAAAgAAAQAAAgCAA=</HashCode>
+      <FileName>DataDictionary\DataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.DataDictionaryNameSpace" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEACAAAAAKAAAAAAAAUAAAAAAAAAAAAAAgBAAIA=</HashCode>
+      <FileName>DataDictionary\DataDictionaryNameSpace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.MeasureableDataDictionaryEntry" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataDictionary\MeasurableDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.QuantifableDataDictionaryEntry" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAACAAAAAAgAAEAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataDictionary\QuantifableDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.DataDictionary.TextDataDictionaryEntry" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataDictionary\TextDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="iRadiate.DataModel.DataDictionary.IDataDictionaryEntry" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAIAAAAAgAAQAAAAAAAAgAAAAAAAACAA=</HashCode>
+      <FileName>DataDictionary\IDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="iRadiate.DataModel.DataDictionary.BooleanRepresentation" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAAAAAEAAgAAAAAAAAAgAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>DataDictionary\BooleanDataDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

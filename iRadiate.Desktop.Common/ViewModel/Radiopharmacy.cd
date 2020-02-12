@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.Desktop.Common.ViewModel.DataStoreItemViewModel" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJICAICAAAEZAGCAAAsOAgEABMAGAECAAACiBCkAIA=</HashCode>
+      <FileName>ViewModel\DataStoreItemViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.GeneratorViewModel" Collapsed="true">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFCAQAgAAAAAIAACCoARABEBADEBAAABAEAIgEAAAI=</HashCode>
+      <FileName>ViewModel\GeneratorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.KitDefinitionViewModel" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\KitDefinitionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.RadioactiveInventoryItemViewModel" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAEQAIAAAAAAAABAAAAABAAAABABAAAAFEAAAACAAA=</HashCode>
+      <FileName>ViewModel\RadioactiveInventoryItemViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.BulkDoseViewModel" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAIIAAAAAABAAAAICQAAACAAAAAACABIQAAAAAAA=</HashCode>
+      <FileName>ViewModel\BulkDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.ElutionViewModel" Collapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\BulkDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.ReconstitutedColdKitViewModel" Collapsed="true">
+    <Position X="8.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAABAAAAAAFAAAAAACCIACAAAAAAAwAAEAAgA=</HashCode>
+      <FileName>ViewModel\BulkDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.BaseUnitDoseViewModel" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAggIACAAAIIAAAAAAAAIAAgAAAAAIAIAEg=</HashCode>
+      <FileName>ViewModel\UnitDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.SyringeUnitDoseViewModel" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\UnitDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.CapsuleUnitDoseViewModel" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\UnitDoseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

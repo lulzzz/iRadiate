@@ -1,0 +1,720 @@
+﻿<UserControl x:Class="iRadiate.Whiteboard.Common.View.WhiteboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:iRadiate.Whiteboard.Common"
+             xmlns:localview="clr-namespace:iRadiate.Whiteboard.Common.View"
+             xmlns:properties="clr-namespace:iRadiate.Whiteboard.Common.Properties"
+              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:deskView="clr-namespace:iRadiate.Desktop.Common.View;assembly=iRadiate.Desktop.Common"
+             xmlns:desk="clr-namespace:iRadiate.Desktop.Common;assembly=iRadiate.Desktop.Common"
+             xmlns:sort="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             mc:Ignorable="d" 
+             Background="{DynamicResource ControlBackgroundBrush}"
+             d:DesignHeight="700" d:DesignWidth="1200" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <localview:CompletedToRotation x:Key="CompletionToRotation"/>
+            <localview:TaskStatusToOpacity x:Key="TaskStatusToOpacity"/>
+            <localview:TaskStatusToBrush x:Key="TaskStatusToBrush"/>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <Style x:Key="Body_Content_DataGrid_Centering"
+                    TargetType="{x:Type DataGridCell}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+
+                    <DataTrigger Binding="{Binding Path=Completed}" Value="true">
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=Cancelled}" Value="true">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Red"/>
+                    </DataTrigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <localview:TasksToScans x:Key="TasksToScans"/>
+            <localview:TasksToInjections x:Key="TasksToInjections"/>
+            <desk:AvailableToOpacityConverter x:Key="AvailableToOpacityConverter"/>
+            <desk:TransportTypeToIconConverter x:Key="TransportTypeToImageConverter"/>
+            <desk:PregnancyStatusToIconConverter x:Key="PregnancyStatusToImageConverter"/>
+            <desk:GenderToIconConverter x:Key="GenderToImageConverter" />
+            
+            <CollectionViewSource x:Key="ToolView" Source="{Binding Path=Tools}">
+                <CollectionViewSource.SortDescriptions>
+                    <sort:SortDescription Direction="Ascending" PropertyName="PositionIndex"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+        
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True"> 
+        <Grid Name="ControlsGrid" DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="480"/>
+                <!--<ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="200"/>-->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ElementName=AppointmentGrid,Path=Items.Count}" FontSize="14"/>
+                <TextBlock Grid.Column="0" Text=" Appointments" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <ComboBox Height="30" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Path=Whiteboards}" SelectedItem="{Binding Path=SelectedWhiteboard}" Visibility="Hidden">
+                
+            </ComboBox>
+            <DatePicker  
+                        IsEnabled="False"
+                        Grid.Row="0" Grid.Column="2" SelectedDate="{Binding Path=SelectedDate,UpdateSourceTrigger=PropertyChanged}" 
+                        FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150"/>
+            <StackPanel Grid.Row="0" Grid.Column="3" VerticalAlignment="Center">
+                
+                    <Grid Height="50" Width="480" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="85"/>
+                    </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Exclude Completed?"  BorderBrush="Transparent" FontSize="14" Grid.Column="0" Grid.Row="0" 
+                               VerticalAlignment="Center" Margin="2" Grid.RowSpan="1" Padding="0"/>
+                   
+                    <Controls:ToggleSwitch  IsChecked="{Binding Path=ExcludeCompleted}"
+                              Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                              OnLabel="Yes" OffLabel="No"
+                                       VerticalAlignment="Center"
+                                               Grid.Column="1" Grid.Row="0"
+                              HorizontalAlignment="Left" Margin="2" Width="85"/>
+
+                        <Label Content="Exclude Cancelled?"  BorderBrush="Transparent" FontSize="14" Grid.Column="0" Grid.Row="1" Margin="2" Padding="0" VerticalAlignment="Center"/>
+                        <Controls:ToggleSwitch  IsChecked="{Binding Path=ExcludeCancelled}"
+                               Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                             
+                              OnLabel="Yes" OffLabel="No"
+                                       VerticalAlignment="Center"
+                                               Grid.Column="1" Grid.Row="1"
+                              HorizontalAlignment="Left" Margin="2" Width="85"/>
+
+                    <Label Content="Highlight arrived?"  BorderBrush="Transparent" FontSize="14" Grid.Column="2" Grid.Row="0" 
+                               VerticalAlignment="Center" Margin="2" Grid.RowSpan="1" Padding="0"/>
+                    <Controls:ToggleSwitch  IsChecked="{Binding Path=HighlightArrived}"
+                               Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                             
+                              OnLabel="Yes" OffLabel="No"
+                                       VerticalAlignment="Center"
+                                               Grid.Column="3" Grid.Row="0"
+                              HorizontalAlignment="Left" Margin="2" Width="85"/>
+                </Grid>
+                   
+                
+            </StackPanel>
+           
+            
+           
+           
+        </Grid>
+        <Grid Name="ToolsGrid" DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+                <Canvas Height="38" Background="White" Margin="2">
+                <ItemsControl ItemsSource="{Binding Source={StaticResource ToolView}}" >
+                  
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl 
+                           VerticalAlignment="Center"
+                        VerticalContentAlignment="Stretch"
+                        HorizontalAlignment="Left"
+                            Background="Transparent">
+                                <ContentPresenter Content="{Binding Path=ToolContent}" ToolTip="{Binding Path=ToolTipText}" 
+                                                   
+                                                  IsEnabled="{Binding Path=Available}" Visibility="{Binding Path=WhiteboardVisible,Converter={StaticResource BoolToVis}}"/>
+                            </ContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                    
+                </Canvas>
+            
+            
+        </Grid>
+        <Grid Name="ActionBarGrid" DockPanel.Dock="Right">
+            <StackPanel Background="{DynamicResource GrayBrush1}"  Width="{Binding Path=ActionBarWidth}">
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    
+                    <iconPacks:PackIconModern Kind="MovieClapper" Height="24" Width="24" Foreground="{DynamicResource WhiteBrush}" Margin="2"/>
+                    <Label FontWeight="SemiBold" Content="Actions" Foreground="White" FontSize="16" BorderBrush="Transparent"/>
+                    <Image Source="/iRadiate.Desktop.Common;component/Images/ActionIcon.png" Height="23" Width="23" Margin="0" Visibility="Collapsed"/>
+                </StackPanel>
+                
+                <ListBox ItemsSource="{Binding Path=SelectedAppointment.AvailableActions}" Background="Transparent" BorderThickness="0" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Path=ExecuteCommand}" BorderThickness="1" Width="96" Margin="2,5,2,5" Height="75" Style="{StaticResource BlackWhiteButton}">
+                                <TextBlock Text="{Binding Path=Name}" TextWrapping="Wrap" FontSize="14"/>
+                            </Button>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+        <Grid Name="TableGrid" DockPanel.Dock="Top" ScrollViewer.CanContentScroll="True">
+            <DataGrid  Name="AppointmentGrid" 
+                       Background="{DynamicResource MenuBackgroundBrush}" 
+                       RowHeaderWidth="0" 
+                       VerticalAlignment="Stretch" 
+                       AutoGenerateColumns="False" 
+                       HorizontalAlignment="Stretch" 
+                       IsReadOnly="False"
+                        CanUserAddRows="False" 
+                       CanUserSortColumns="True"  
+                       BorderBrush="DarkGray" 
+                       GridLinesVisibility="All" 
+                       SelectionMode="Single" 
+                       SelectionUnit="FullRow" 
+                       HorizontalGridLinesBrush="LightGray" 
+                       EnableColumnVirtualization="False"
+                       VerticalGridLinesBrush="LightGray"
+                       ItemsSource="{Binding Path=AppointmentsView.View}" 
+                       SelectedItem="{Binding Path=SelectedAppointment}" 
+                       CellStyle="{StaticResource Body_Content_DataGrid_Centering}"
+                        >
+                <DataGrid.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    
+                </DataGrid.Resources>
+                    <DataGrid.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Margin" Value="0,0,0,5"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Expander IsExpanded="True" BorderBrush="{DynamicResource AccentColorBrush2}" Background="{DynamicResource AccentColorBrush3}"  BorderThickness="1,1,1,5" x:Name="exp" HorizontalContentAlignment="Left">
+                                                    <Expander.Header>
+                                                        <DockPanel>
+                                                            <TextBlock FontWeight="SemiBold" FontSize="14" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100" Foreground="{DynamicResource BlackBrush}" HorizontalAlignment="Left"/>
+                                                        
+                                                        </DockPanel>
+                                                    </Expander.Header>
+                                                    <Expander.Content>
+                                                        <ItemsPresenter Visibility="{Binding ElementName=exp,Path=IsExpanded,Converter={StaticResource BoolToVis}}" />
+                                                    </Expander.Content>
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                                         <TextBlock FontWeight="SemiBold"  Text="{Binding Path=Name}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                       
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </DataGrid.GroupStyle>
+                <DataGrid.RowStyle>     
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Height" Value="45"/>
+                        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static properties:Settings.Default},Path=HighlightArrived}" Value="True"/>
+                                    <Condition Binding="{Binding Path=HasPatientArrived}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </MultiDataTrigger>
+                           
+                        </Style.Triggers>
+                        
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Height" Value="45"/>
+                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Setter Property="BorderBrush" Value="DarkGray"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Padding" Value="2"/>
+                        <Setter Property="Foreground" Value="white"/>
+                        
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding}"></TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem x:Name="TransportTypeColumnMenuItem" 
+                                              IsCheckable="True" 
+                                              Header="Tranport Type" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=TransportTypeColumnVisibility}"/>
+                                    <MenuItem x:Name="PregnancyStatusColumnMenuItem" 
+                                              IsCheckable="True" 
+                                              Header="Pregnancy Status" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=PregnancyStatusColumnVisibility}"/>
+                                    <MenuItem x:Name="SexColumnMenuItem" 
+                                              IsCheckable="True" 
+                                              Header="Sex" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=SexColumnVisibility}"/>
+                                    <MenuItem x:Name="ScheduledArrivalTimeColumnMenuItem" 
+                                              IsCheckable="True" 
+                                              Header="Scheduled Arrival Time" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=ScheduledArrivalTimeColumnVisibility}"/>
+                                    <MenuItem x:Name="Title" 
+                                              IsCheckable="True" 
+                                              Header="Title" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=TitleColumnVisibility}"/>
+                                    <MenuItem x:Name="GivenNames" 
+                                              IsCheckable="True" 
+                                              Header="Given Names" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=GivenNamesColumnVisibility}"/>
+                                    <MenuItem x:Name="Surname" 
+                                              IsCheckable="True" 
+                                              Header="Surname" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=SurnameColumnVisibility}"/>
+                                    <MenuItem x:Name="DOB" 
+                                              IsCheckable="True" 
+                                              Header="Date of Birth" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=DOBColumnVisibility}"/>
+                                    <MenuItem x:Name="Age" 
+                                              IsCheckable="True" 
+                                              Header="Age" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=AgeColumnVisibility}"/>
+                                    <MenuItem x:Name="Status" 
+                                              IsCheckable="True" 
+                                              Header="Status" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=StatusColumnVisibility}"/>
+                                    <MenuItem x:Name="Name" 
+                                              IsCheckable="True" 
+                                              Header="Appointment Name" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=NameColumnVisibility}"/>
+                                    <MenuItem x:Name="Ward" 
+                                              IsCheckable="True" 
+                                              Header="Ward" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=WardColumnVisibility}"/>
+                                    <MenuItem x:Name="Hospital" 
+                                              IsCheckable="True" 
+                                              Header="Hospital" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=HospitalColumnVisibility}"/>
+                                    <MenuItem x:Name="Comments" 
+                                              IsCheckable="True" 
+                                              Header="Comments" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=CommentsColumnVisibility}"/>
+                                    <MenuItem x:Name="Duration" 
+                                              IsCheckable="True" 
+                                              Header="Appointment Duration" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=DurationColumnVisibility}"/>
+                                    <MenuItem x:Name="Injections" 
+                                              IsCheckable="True" 
+                                              Header="Injections" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=InjectionsColumnVisibility}"/>
+                                    <MenuItem x:Name="Scans" 
+                                              IsCheckable="True" 
+                                              Header="Scans" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=ScansColumnVisibility}"/>
+                                    <MenuItem x:Name="Workflow" 
+                                              IsCheckable="True" 
+                                              Header="Workflow" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=WorkflowColumnVisibility}"/>
+                                    <MenuItem x:Name="Room" 
+                                              IsCheckable="True" 
+                                              Header="Room" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=RoomColumnVisibility}"/>
+                                    <MenuItem x:Name="CurrentTask" 
+                                              IsCheckable="True" 
+                                              Header="Current Task" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=CurrentTaskColumnVisibility}"/>
+                                    <MenuItem x:Name="NextTask" 
+                                              IsCheckable="True" 
+                                              Header="Next Task" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=NextTaskColumnVisibility}"/>
+                                    <MenuItem x:Name="Camera" 
+                                              IsCheckable="True" 
+                                              Header="Camera" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=CameraColumnVisibility}"/>
+                                    <MenuItem x:Name="MRN" 
+                                              IsCheckable="True" 
+                                              Header="MRN" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=MRNColumnVisibility}"/>
+                                    <MenuItem x:Name="BioHazard" 
+                                              IsCheckable="True" 
+                                              Header="BioHazard" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=BioHazardColumnVisibility}"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+                    
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Transport"
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=TransportTypeColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=TransportTypeColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=TransportTypeColumnVisibility,Converter={StaticResource BoolToVis}}"
+                                            >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                <ContentControl Content="{Binding Path=TransportType,Converter={StaticResource TransportTypeToImageConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                
+                                <!--<Image Source="{Binding Path=TransportType,Converter={StaticResource TransportTypeToImageConverter}}" Height="23" Width="23" />-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  Header="Pregnancy" 
+                                                 DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=PregnancyStatusColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=PregnancyStatusColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=PregnancyStatusColumnVisibility,Converter={StaticResource BoolToVis}}"
+                                                >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                <ContentControl Content="{Binding Path=Patient.PregnancyStatus,Converter={StaticResource PregnancyStatusToImageConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <!--<Image Source="{Binding Path=Patient.PregnancyStatus,Converter={StaticResource PregnancyStatusToImageConverter}}" Height="23" Width="23"/>-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Sex" 
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=SexColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=SexColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=SexColumnVisibility,Converter={StaticResource BoolToVis}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                <ContentControl Content="{Binding Path=Patient.Gender,Converter={StaticResource GenderToImageConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <!--<Image Source="{Binding Path=Patient.Gender,Converter={StaticResource GenderToImageConverter}}" Height="24" Width="24"/>-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn  Binding="{Binding Path=ScheduledArrivalTime,StringFormat={}{0:hh:mm tt}}" 
+                                             IsReadOnly="true"
+                                             Header="Arrival Time"
+                                             DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=ScheduledArrivalTimeColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=ScheduledArrivalTimeColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=ScheduledArrivalTimeColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Binding="{Binding Path=Patient.Title}" 
+                                        IsReadOnly="true"
+                                            Header="Title" 
+                                            SortMemberPath="Patient.Title" 
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=TitleColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=TitleColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=TitleColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Binding="{Binding Path=Patient.GivenNames}" 
+                                        IsReadOnly="true"
+                                        Header="Given Names" 
+                                        SortMemberPath="Patient.GivenNames"
+                                         DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=GivenNamesColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=GivenNamesColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=GivenNamesColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Binding="{Binding Path=Patient.Surname}" 
+                                            IsReadOnly="true"
+                                            Header="Surname" 
+                                            SortMemberPath="Patient.Surname" 
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=SurnameColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=SurnameColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=SurnameColumnVisibility,Converter={StaticResource BoolToVis}}"/>                    
+                        <DataGridTextColumn Binding="{Binding Path=Patient.MRN}" 
+                                        IsReadOnly="true"
+                                        Header="MRN" 
+                                        SortMemberPath="Patient.MRN"
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=MRNColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=MRNColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=MRNColumnVisibility,Converter={StaticResource BoolToVis}}"/>                    
+                        <DataGridTextColumn Binding="{Binding Path=Patient.DateOfBirth,StringFormat={}{0: d/MM/yyyy}}" 
+                                        IsReadOnly="true"
+                                        Header="Birthdate" 
+                                        SortMemberPath="Patient.DateOfBirth"
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=DOBColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=DOBColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=DOBColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Binding="{Binding Path=Patient.Age}" 
+                                            IsReadOnly="true"
+                                            Header="Age" 
+                                            SortMemberPath="Patient.Age" 
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=AgeColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=AgeColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AgeColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn 
+                                        Binding="{Binding Path=Status}" 
+                                    IsReadOnly="true"
+                                        Header="Status" 
+                                        CanUserSort="True"
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=StatusColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=StatusColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=StatusColumnVisibility,Converter={StaticResource BoolToVis}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+
+                    </DataGridTextColumn>
+                        <DataGridTextColumn 
+                                            Binding="{Binding Path=Name}" 
+                            IsReadOnly="true"
+                                            Header="Appointment Name" 
+                                            SortMemberPath="Name"
+                                             DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=NameColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=NameColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=NameColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Binding="{Binding Path=Ward.AbbreviatedFullName}" 
+                                        IsReadOnly="true"
+                                        Header="Ward" 
+                                        SortMemberPath="Ward.Name"
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=WardColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=WardColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=WardColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Header="Hospital" 
+                                        IsReadOnly="true"
+                                        Binding="{Binding Path=Patient.CurrentWard.Hospital.Name}" 
+                                        SortMemberPath="Patient.CurrentWard.Hospital.Name"
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=HospitalColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=HospitalColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=HospitalColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Header="Comments" 
+                                            Binding="{Binding Path=Comments}"
+                                          
+                                                IsReadOnly="true"
+                                                DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=CommentsColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=CommentsColumnWidth,Mode=TwoWay}"  
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=CommentsColumnVisibility,Converter={StaticResource BoolToVis}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                        <DataGridTextColumn  Header="Appointment Duration"  
+                                         IsReadOnly="true"
+                        Binding="{Binding Path=AppointmentDurationText}"
+                         DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=DurationColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=DurationColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=DurationColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTemplateColumn Header="Doses"
+                                            IsReadOnly="true"
+                                            SortMemberPath="Item.InjectionSortTime"
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=InjectionsColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=InjectionsColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=InjectionsColumnVisibility,Converter={StaticResource BoolToVis}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Path=UnitDoses}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <iconPacks:PackIconFontAwesome Kind="SyringeSolid" Height="24" Width="24" Margin="2" 
+                                                                          
+                                                                           Opacity="{Binding Path=UnitDose.Administered,Converter={StaticResource CompletionToRotation}}">
+                                                <iconPacks:PackIconFontAwesome.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Details" Click="UnitDoseContextMenuClick"/>
+                                                    </ContextMenu>
+                                                </iconPacks:PackIconFontAwesome.ContextMenu>
+                                            </iconPacks:PackIconFontAwesome>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                               
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Scans" 
+                                            IsReadOnly="true"
+                                            SortMemberPath="Item.ScanSortTime"
+                                            DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=ScansColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=ScansColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=ScansColumnVisibility,Converter={StaticResource BoolToVis}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Path=Scans,Converter={StaticResource ResourceKey=TasksToScans}}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <iconPacks:PackIconModern Kind="PeopleSensor" Height="24" Width="24" Margin="2"
+                                                                      Background="{Binding Path=TaskStatus,Converter={StaticResource TaskStatusToBrush}}"
+                                                                      Opacity="{Binding Path=TaskStatus,Converter={StaticResource TaskStatusToOpacity}}">
+
+                                                <!--Opacity="{Binding Path=TaskStatus,Converter={StaticResource TaskStatusToOpacity}}"-->
+                                                <iconPacks:PackIconModern.ToolTip>
+                                                    <Border Background="White"
+                                                            BorderBrush="LightGray">
+                                                        <StackPanel Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Path=Room.Name}" FontSize="14"/>
+                                                            <TextBlock Text="{Binding Path=ValidCommencementTime,StringFormat='t'}" FontSize="14"/>
+                                                            
+                                                        </StackPanel>
+                                                    </Border>
+                                                </iconPacks:PackIconModern.ToolTip>
+                                            </iconPacks:PackIconModern>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Workflow" 
+                                            IsReadOnly="true"
+                                             DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=WorkflowColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=WorkflowColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=WorkflowColumnVisibility,Converter={StaticResource BoolToVis}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Path=Tasks}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="Gray" 
+                                                    Background="White"
+                                                    BorderThickness="1" CornerRadius="2" Padding="2">
+                                                <Border.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Command="{Binding Path=ViewDetailsCommand}">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="{StaticResource DetailsIcon}" Height="32"/>
+                                                            </MenuItem.Icon>
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="Details" FontSize="14"/>
+                                                            </MenuItem.Header>
+
+                                                        </MenuItem>
+                                                        <MenuItem Header="Assign to">
+
+                                                            <ListBox ItemsSource="{Binding Path=Roles}" DisplayMemberPath="Name" SelectedItem="{Binding Path=Role}"/>
+
+                                                        </MenuItem>
+                                                        <MenuItem Header="Move to">
+                                                            <ListBox ItemsSource="{Binding Path=Rooms}" DisplayMemberPath="Name" SelectedItem="{Binding Path=Room}"/>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </Border.ContextMenu>
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock Text="{Binding Path=Name}" FontSize="12"/>
+                                                    <TextBlock Text="{Binding Path=SchedulingTime,StringFormat={}{0:hh:mm tt}}" FontSize="12"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                </ItemsControl>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Room" 
+                                        IsReadOnly="true"
+                                        Binding="{Binding Path=CurrentRoom}" 
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=RoomColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=RoomColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=RoomColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Header="Current Task" 
+                                        IsReadOnly="true"
+                                        Binding="{Binding Path=CurrentTask}" 
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=CurrentTaskColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=CurrentTaskColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=CurrentTaskColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Header="Next Task" 
+                                        IsReadOnly="true"
+                                        Binding="{Binding Path=NextTask}" 
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=NextTaskColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=NextTaskColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=NextTaskColumnVisibility,Converter={StaticResource BoolToVis}}"/>
+                        <DataGridTextColumn Header="Camera" 
+                                        IsReadOnly="true"
+                                        Binding="{Binding Path=AssignedCamera}" 
+                                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=CameraColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=CameraColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=CameraColumnVisibility,Converter={StaticResource BoolToVis}}"
+                                       />
+                    <DataGridTextColumn 
+                                            Foreground="Red"
+                        FontWeight="Bold"
+                                            IsReadOnly="True"
+                                            Binding="{Binding Path=Risks}"
+                        DisplayIndex="{Binding Source={x:Static properties:Settings.Default},Path=BioHazardColumnDisplayIndex,Mode=TwoWay}"
+                                            Width="{Binding Source={x:Static properties:Settings.Default},Path=BioHazardColumnWidth,Mode=TwoWay}"   
+                                            Visibility="{Binding Source={x:Static properties:Settings.Default},Path=BioHazardColumnVisibility,Converter={StaticResource BoolToVis}}">
+
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <iconPacks:PackIconMaterial Kind="Biohazard" Height="28" Width="28"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</UserControl>

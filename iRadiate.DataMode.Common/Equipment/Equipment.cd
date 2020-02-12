@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.DataModel.QA.EquipmentItem" Collapsed="true">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAIEAACAgMCAABAIAAQAQZAQEAAAAAAAAAAAACAQg=</HashCode>
+      <FileName>QA\Equipment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.Scanner" Collapsed="true">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\Scanner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.CTScanner" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\CTScanner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.DoseCalibrator" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\DoseCalibrator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.GammaCamera" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\GammaCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.GammaCounter" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\GammaCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.PETScanner" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAgAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\PETScanner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.SurveyMeter" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\SurveyMeter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.ContaminationMeter" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QA\ContaminationMeter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.QANameSpace" Collapsed="true">
+    <Position X="3.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEAAAAAAAIAAAAAAAAQAAAAAAAAAAAQAAgAAAIA=</HashCode>
+      <FileName>QA\QANameSpace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.DataModel.QA.QAVariable" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAEgAAAEAAAgAAQAQAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>QA\QAVariable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.View.HospitalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="500"
+             Width="400"
+             d:DesignHeight="400" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+
+            <Style TargetType="DatePicker">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="185"/>
+
+            </Style>
+
+
+
+
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+   
+    <DockPanel>
+       
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Label Content="Name" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="14"/>
+            <TextBox HorizontalAlignment="Left" Text="{Binding Path=Item.Name}" Height="23" IsReadOnly="{Binding EditButtonVisible}"
+                     FontSize="14" TextWrapping="Wrap"  VerticalAlignment="Top" Width="137" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" DockPanel.Dock="Top">
+            <Label Content="Abbreviation" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
+            <TextBox HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="{Binding Path=Item.Abbreviation}" IsReadOnly="{Binding Path=EditButtonVisible}" VerticalAlignment="Top" Width="174"/>
+        </StackPanel>
+       
+        <Label Content="Wards" Grid.Row="2" DockPanel.Dock="Top"
+               HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="14"/>
+        <Button Style="{StaticResource TextButton}" Content="Add Ward" DockPanel.Dock="Top" Width="75" FontSize="14" HorizontalAlignment="Left" 
+                Margin="2"
+                IsEnabled="{Binding Path=SaveButtonVisible}"
+                Name="AddWardButton"
+                Click="AddWardButton_Click"
+                Visibility="Collapsed"
+                />
+        <DataGrid AutoGenerateColumns="False"  
+                  Grid.Row="3" 
+                  Name="WardsGrid"
+                  ItemsSource="{Binding Path=Item.Wards,Mode=TwoWay}" 
+                  FontSize="14" 
+                  DockPanel.Dock="Top"
+                  ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  CanUserAddRows="True"
+                  Height="300"
+                  >
+            <DataGrid.Columns>
+                
+                
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Abbreviation" Binding="{Binding Path=Abbreviation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+        <ContentControl Content="{StaticResource ButonStackPanel}" DockPanel.Dock="Bottom"/>
+
+    </DockPanel>
+    
+</UserControl>

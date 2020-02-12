@@ -1,0 +1,268 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.View.StandardFiniteTaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xcad="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:view="clr-namespace:iRadiate.Desktop.Common.View"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             Background="White"
+             mc:Ignorable="d" 
+              Height="630" Width="435"
+             d:DesignHeight="400" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>     
+            <Style TargetType="Label" BasedOn="{StaticResource MyLabelStyle}">
+                <Setter Property="BorderBrush" Value="DarkGray"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource MyTextBlockStyle}">
+                
+            </Style>
+            <Style TargetType="ToggleButton" BasedOn="{StaticResource MyToggleButtonStyle}"/>
+            <Style TargetType="ComboBox" >
+                <Setter Property="FontSize" Value="14"/>
+
+            </Style>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        </ResourceDictionary>        
+    </UserControl.Resources>
+    
+    <Border BorderThickness="1" BorderBrush="Black">
+        <TabControl TabStripPlacement="Top">
+            
+            <TabItem Name="Details" Header="Details"  >
+                <Grid ShowGridLines="False" Background="White">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Background="{DynamicResource AccentColorBrush2}" >
+                        <Label FontWeight="SemiBold" FontSize="16" Width="100">Patient</Label>
+                        <TextBlock Text="{Binding Path=Patient.FullNameWithTitle}" FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Background="{DynamicResource AccentColorBrush3}" >
+                        <Label FontWeight="SemiBold" FontSize="14" Width="100">Appointment</Label>
+                        <TextBlock Text="{Binding Path=Appointment.Name}" FontSize="14"/>
+                    </StackPanel>
+                    <Grid Grid.Row="2" ShowGridLines="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45" />
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Task name" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Text="Scheduled completion time" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="4"/>
+                        <TextBlock Text="Role" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="5"/>
+                        <TextBlock Text="User" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="6"/>
+                        <TextBlock Text="Room" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="7"/>
+                        <TextBlock Text="Completed?" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="8"/>
+                        <TextBlock Text="Time Completed" TextWrapping="WrapWithOverflow"  Grid.Column="0" Grid.Row="9" 
+                                   Visibility="{Binding Path=Completed,Converter={StaticResource BoolToVis}}"/>
+                        <TextBlock Text="Scheduled Commencement" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="1" />
+                        <TextBlock Text="Commenced?" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="2" />
+                        <TextBlock Text="Commencement Time" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="3" 
+                                   Visibility="{Binding Path=Commenced,Converter={StaticResource BoolToVis}}"/>
+
+                        <TextBlock Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Height="30" Width="250" />
+
+                        <!--<Controls:DateTimePicker Grid.Column="1" 
+                                                 Grid.Row="1"
+                                                 IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 Language="en-AU"
+                                                 SelectedDate="{Binding Path=ScheduledCommencementTime}"
+                                                 IsClockVisible="True"                                               
+                                                 FontSize="14"
+                                                 Height="30"
+                                                 Orientation="Horizontal"
+                                                 PickerVisibility="HourMinute" 
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="False"/>-->
+                        <xcad:DateTimePicker Grid.Column="1"
+                                             Grid.Row="1"
+                                             Height="30"
+                                             Margin="3"
+                                             Format="Custom"
+                                             FormatString="dd/MM/yyyy h:mm tt"
+                                             IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 Value="{Binding Path=ScheduledCommencementTime}"
+                                            />
+                        <!--<Controls:DateTimePicker Grid.Column="1" 
+                                                 Grid.Row="4"
+                                                 IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 SelectedDate="{Binding Path=ScheduledCompletionTime}"
+                                                 IsClockVisible="True"                                               
+                                                 FontSize="14"
+                                                 Height="30"
+                                                 Orientation="Horizontal"
+                                                 PickerVisibility="HourMinute" 
+                                                 Language="en-AU"
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="False"/>-->
+                        <xcad:DateTimePicker Grid.Column="1"
+                                             Grid.Row="4"
+                                             Height="30"
+                                             Margin="3"
+                                             Format="Custom"
+                                             Language="en-AU"
+                                             FormatString="dd/MM/yyyy h:mm tt"
+                                             IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 Value="{Binding Path=ScheduledCompletionTime}"
+                                            />
+                        <ComboBox  Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Height="30" Width="250" 
+                                   ItemsSource="{Binding Path=Roles}" SelectedItem="{Binding Path=Role}" 
+                           IsEnabled="{Binding Path=SaveButtonVisible}"  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="150" Text="{Binding Path=Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="30" Width="250" 
+                                  ItemsSource="{Binding Path=Users}" SelectedItem="{Binding Path=User}" IsEnabled="{Binding Path=SaveButtonVisible}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="150" Text="{Binding Path=FullName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="30" Width="250" 
+                                  ItemsSource="{Binding Path=Rooms}" SelectedItem="{Binding Path=Room}" IsEnabled="{Binding Path=SaveButtonVisible}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="150" Text="{Binding Path=Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <!--<CheckBox Height="30" Width="30" IsChecked="{Binding Path=Completed}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+                       
+                        <Controls:ToggleSwitch Height="32" IsChecked="{Binding Path=Completed}"
+                                               Grid.Row="8" Grid.Column="1" 
+                                               OnLabel="Yes"
+                                               OffLabel="No"
+                                               Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                               IsEnabled="{Binding Path=SaveButtonVisible}"/>
+                        <!--<Controls:DateTimePicker Grid.Column="1" 
+                                                 Grid.Row="9"
+                                                 IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 SelectedDate="{Binding Path=CompletionTime,StringFormat={}{0 hh:mm tt}}"
+                                                 IsClockVisible="True"                                               
+                                                 FontSize="14"
+                                                 Height="30"
+                                                 Orientation="Horizontal"
+                                                 PickerVisibility="HourMinute" 
+                                                 Visibility="{Binding Path=Completed,Converter={StaticResource BoolToVis}}"
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="False"/>-->
+                        <xcad:DateTimePicker Grid.Column="1"
+                                             Grid.Row="9"
+                                             Height="30"
+                                             Margin="3"
+                                             Format="Custom"
+                                             Language="en-AU"
+                                             FormatString="dd/MM/yyyy h:mm tt"
+                                             IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 Value="{Binding Path=CompletionTime}"
+                                             Visibility="{Binding Path=Completed,Converter={StaticResource BoolToVis}}"
+                                            />
+                        <!--<CheckBox Height="30" Width="30" IsChecked="{Binding Path=Commenced}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+                        
+                        <Controls:ToggleSwitch Height="32" IsChecked="{Binding Path=Commenced}"
+                                               Grid.Row="2" Grid.Column="1"
+                                               OnLabel="Yes"
+                                               OffLabel="No"
+                                               Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                               IsEnabled="{Binding Path=SaveButtonVisible}"/>
+                        <ContentControl Content="{StaticResource ButonStackPanel}" Grid.Row="10" Grid.Column="1"/>
+                        <!--<Controls:DateTimePicker Grid.Column="1" 
+                                                 Grid.Row="3"
+                                                 IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 SelectedDate="{Binding Path=CommencementTime}"
+                                                 IsClockVisible="True"                                               
+                                                 FontSize="14"
+                                                 Height="30"
+                                                 Orientation="Horizontal"
+                                                 PickerVisibility="HourMinute" 
+                                                 Language="en-AU"
+                                                 Visibility="{Binding Path=Commenced,Converter={StaticResource BoolToVis}}"
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="False"/>-->
+                        <xcad:DateTimePicker Grid.Column="1"
+                                             Grid.Row="3"
+                                             Height="30"
+                                             Margin="3"
+                                             Format="Custom"
+                                             FormatString="dd/MM/yyyy h:mm tt"
+                                             IsEnabled="{Binding Path=SaveButtonVisible}"
+                                                 Value="{Binding Path=CommencementTime}"
+                                             Visibility="{Binding Path=Commenced,Converter={StaticResource BoolToVis}}"
+                                            />
+                       
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="Constraints" Header="Constraints" >
+                <view:ConstraintsView/>
+                <!--<StackPanel>
+
+                    <Button Margin="2,5,2,5"  Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" 
+                                Command="{Binding Path=AddConstraintCommand}" Name="AddConstraintButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/iRadiate.Desktop.Common;component/Images/PlusIcon.png" Height="26" Width="26"/>
+                            <Label FontSize="14" Content="Add a constraint"/>
+                        </StackPanel>
+
+                    </Button>
+                    <Popup Visibility="Visible" IsOpen="{Binding Path=AddConstraintOpen}" Placement="Bottom" PlacementTarget="{Binding ElementName=AddConstraintButton}">
+                        <Border CornerRadius="2" BorderBrush="Gray" BorderThickness="1" Background="White">
+
+
+                            <StackPanel>
+                                <ComboBox FontSize="14" ItemsSource="{Binding Path=AvailableConstraints}" Width="150" DisplayMemberPath="ConstraintType" SelectedValuePath="ConstraintType"
+                                  SelectedItem="{Binding Path=SelectedConstraintType}">
+
+                                </ComboBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                    <Button Content="Cancel" Background="Transparent" Margin="2" />
+                                    <Button Content="OK" Background="Transparent" Margin="2,2,5,2" Command="{Binding Path=InsertConstraintCommand}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+
+                    <ListBox ItemsSource="{Binding Path=ConstraintsView}" SelectedItem="{Binding Path=SelectedConstraint}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Background="White" BorderBrush="Transparent" Command="{Binding Path=ViewDetailsCommand}" Margin="3,1,3,1">
+                                        <Image Source="/iRadiate.Desktop.Common;component/Images/DetailsIcon.png" Height="26" Width="26"/>
+                                    </Button>
+                                    <TextBlock Text="{Binding Path=Name}" FontSize="11"/>
+
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>-->
+
+            </TabItem>
+        </TabControl>
+        
+    </Border>
+</UserControl>

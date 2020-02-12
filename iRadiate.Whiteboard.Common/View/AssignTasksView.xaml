@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="iRadiate.Whiteboard.Common.View.AssignTasksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="500">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+           
+            
+            
+
+            
+            
+
+
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               FontSize="16"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Content="Re-assign Tasks"/>
+        <StackPanel Grid.Row="1"  VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock 
+                   FontSize="14"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=Appointment.Patient.FullName}"
+                   Margin="1,1,10,1"/>
+            <TextBlock 
+                   FontSize="14"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=Appointment.Name}"
+                   Margin="1,1,10,1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center">
+            <Label Content="Assign to Role" FontSize="14"/>
+            <ComboBox  Height="30" 
+                       FontSize="14"
+                       VerticalAlignment="Center" 
+                       Width="250" 
+                       ItemsSource="{Binding Roles}"
+                       SelectedItem="{Binding Path=SelectedRole}"
+                       DisplayMemberPath="Name"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="3">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="Re-assignable Tasks" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <Label Content="Select all" FontSize="12" VerticalAlignment="Center" Margin="25,0,0,0"/>
+                <CheckBox IsChecked="{Binding Path=AssignAllChecked}" IsThreeState="False" VerticalAlignment="Center"/>
+            </StackPanel>
+            <DataGrid AutoGenerateColumns="False" 
+                      x:Name="TasksGrid"
+                      SelectionMode="Extended"
+                      SelectionUnit="FullRow"
+                      CanUserAddRows="False"
+                      CanUserReorderColumns="False"
+                      FontSize="14"
+                      ItemsSource="{Binding Path=AssignableTasksView}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                    <DataGridTextColumn Header="Scheduled Time" Binding="{Binding Path=SchedulingTime,StringFormat={}{0:hh:mm tt}}"/>
+                    <DataGridTextColumn Header="Current Role" Binding="{Binding Path=Role.Name}" TextBlock.TextAlignment="Center"/>
+                    <DataGridCheckBoxColumn Header="Re-assign" Binding="{Binding Path=selected}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Style="{StaticResource TextButton}" 
+                    Command="{Binding Path=ReAssignCommand}"
+                    FontSize="14"
+                    Width="100" Content="Re-assign" HorizontalAlignment="Right"
+                    Margin="1,1,20,1"/>
+        </StackPanel>
+        
+            
+    </Grid>
+</UserControl>

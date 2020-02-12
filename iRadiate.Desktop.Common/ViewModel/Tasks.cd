@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.Desktop.Common.ViewModel.BaseTaskViewModel" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAABACEEIQIQAAICkBIYAAQCwgQABAAAAQAAAAAACCg=</HashCode>
+      <FileName>ViewModel\BaseTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.BaseFiniteTaskViewModel" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAASAAIAAAAAAAAAgAAIAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ViewModel\BaseFiniteTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.ArrivalTaskViewModel" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ArrivalTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.ScanTaskViewModel" Collapsed="true">
+    <Position X="7" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ScanTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.DoseAdministrationTaskViewModel" Collapsed="true">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACACIAAAAIAAAIAAAIBBAQAkgQCBAAAAA=</HashCode>
+      <FileName>ViewModel\DoseAdministrationTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iRadiate.Desktop.Common.ViewModel.DataStoreItemViewModel" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJICAICAAAEZAGCAAAsOAgEABMAGAECAAACiBCkAIA=</HashCode>
+      <FileName>ViewModel\DataStoreItemViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="iRadiate.Desktop.Common.ViewModel.WorkflowStatus" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAJAAAAAA=</HashCode>
+      <FileName>ViewModel\BaseTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

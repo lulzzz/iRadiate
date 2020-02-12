@@ -1,0 +1,249 @@
+﻿<Controls:MetroWindow x:Class="iRadiate.Desktop.Common.View.MainWindow" 
+                      Title="iRadiate Whiteboard System Vers 1.0"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+            xmlns:v="clr-namespace:iRadiate.Desktop.Common.View"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                      xmlns:desktop="clr-namespace:iRadiate.Desktop.Common"
+                      xmlns:Properties="clr-namespace:iRadiate.Desktop.Common.Properties"
+                xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit" Activated="Window_Activated"
+                      MouseMove="MetroWindow_MouseMove"
+                     
+                       WindowTitleBrush="{DynamicResource HighlightBrush}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+
+            
+            
+
+
+            <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuItem}">
+                <Grid Height="48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ContentControl Grid.Column="0"
+                                Content="{Binding Name}"
+                                Focusable="False"
+                                Foreground="White"
+                                IsTabStop="False" />
+                    <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Name}" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
+                <Grid Height="48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Margin="12"
+                          
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="{Binding IconSource}"
+                       Stretch="UniformToFill">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding LaunchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                    </Image>
+
+
+                    <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           
+                           Text="{Binding Name}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding LaunchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
+                   
+                    
+                </Grid>
+            </DataTemplate>
+            <Style x:Key="AppThemeMenuItemStyle"
+                   
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                
+            </Style>
+            <Style x:Key="AccentColorMenuItemStyle"
+                   
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                
+            </Style>
+            <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+            <desktop:BoolToWidthConverter x:Key="BoolToWidthConverter"/>
+
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="40"  />-->
+            <RowDefinition/>
+            
+        </Grid.RowDefinitions>       
+        
+        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Grid.Row="1">
+            <Border BorderThickness="1,0,0,1" BorderBrush="{DynamicResource AccentBaseColorBrush}" Background="{DynamicResource HighlightBrush}" >
+                <DockPanel x:Name="ModuleLauncherDockPanel" Width="{Binding Source={x:Static Properties:Settings.Default},Path=ModuleLauncherCollapsed,Converter={StaticResource BoolToWidthConverter}}">
+                
+                <Button DockPanel.Dock="Top" 
+                        HorizontalAlignment="Left" 
+                        Background="Transparent" 
+                        Foreground="White"
+                        BorderThickness="0" 
+                        Margin="8,1,1,1"
+                        Click="Button_Click"
+                        Style="{DynamicResource MetroCircleButtonStyle}"
+                        >
+                    <iconPacks:PackIconFontAwesome Kind="BarsSolid"   Height="24" Width="24" Margin="0"/>
+                </Button>
+                <ListBox Grid.Row="1" 
+                         HorizontalAlignment="Left"
+                     DockPanel.Dock="Top"
+                     Width="160"
+                         Background="Transparent"
+                         Foreground="Transparent"
+                         
+                           ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                         Margin="1"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding Path=ModuleLaunchers}" >
+                        
+                        
+                    <ListBox.ItemTemplate >
+                        <DataTemplate>
+                            <Grid Margin="1,9,1,1" 
+                                  Background="Transparent"
+                                   Visibility="{Binding Path=Visible,Converter={StaticResource BoolToVis}}"
+                                  >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="158"/>
+                                    <ColumnDefinition Width="0"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0"
+                                        Style="{DynamicResource MetroCircleButtonStyle}"
+                                        BorderThickness="0"
+                                        Margin="1"        
+                                        Foreground="{DynamicResource WhiteBrush}"
+                                       
+                                        Command="{Binding Path=LaunchCommand}"
+                                        HorizontalAlignment="Left"
+                                        Background="Transparent">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentPresenter Content="{Binding Path=ButtonContent}" />
+                                            <!--<Image 
+                                          Height="24"
+                                        Width="24"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        
+                                        Source="{Binding IconSource}"
+                                        Stretch="UniformToFill"/>-->
+                                            <TextBlock
+                                        
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="16"
+                                        Margin="5,2"
+                                        Foreground="White"
+                                        Text="{Binding Name}" />
+                                        </StackPanel>
+                                    
+                                </Button>
+                                    <!--Style="{DynamicResource MetroCircleButtonStyle}"-->
+                                    <Button Grid.Column="1"
+                                        BorderThickness="0"
+                                        
+                                        Margin="1"
+                                        Command="{Binding Path=LaunchCommand}"
+                                        HorizontalAlignment="Left"
+                                        Background="Transparent">
+                                    
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+            </DockPanel>
+            </Border>
+
+
+            <Border BorderBrush="{DynamicResource AccentBaseColorBrush}" BorderThickness="0,0,1,1">
+                
+                <xc:BusyIndicator IsBusy="{Binding Path=Busy}" DockPanel.Dock="Left" Background="White" BorderThickness="0">
+                    
+                    <xc:BusyIndicator.BusyContentTemplate >
+                        <DataTemplate >
+                            <Controls:ProgressRing IsActive="{Binding Path=Busy}" Foreground="{DynamicResource AccentBaseColorBrush}" BorderBrush="LightGray" BorderThickness="0" />
+                        </DataTemplate>
+                    </xc:BusyIndicator.BusyContentTemplate>
+                    <xc:BusyIndicator.ProgressBarStyle>
+                        <Style TargetType="ProgressBar">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </xc:BusyIndicator.ProgressBarStyle>
+                    
+                    <xcad:DockingManager Width="Auto" Name="MainDockingControl" Background="Transparent" Padding="0" >
+
+                        <xcad:DockingManager.DocumentHeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" >
+                                    <!--<Image Source="{Binding Path=IconSource}" Height="18" Width="18" Margin="0,0,4,0"/>
+                                    <Label Content="XYZ"/>-->
+                                    
+                                    <ContentPresenter Content="{Binding Path=Content.DataContext.IconContent}"   VerticalAlignment="Center" Margin="0,0,4,0" />
+                                    <TextBlock Text="{Binding Title}" FontSize="14" FontFamily="Segoe UI" Margin="6"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </xcad:DockingManager.DocumentHeaderTemplate>
+                        <xcad:LayoutRoot x:Name="_layoutRoot" >
+                            <xcad:LayoutPanel Orientation="Horizontal">
+                                <xcad:LayoutDocumentPaneGroup >
+                                    <xcad:LayoutDocumentPane x:Name="MyLayoutDocumentPaneGroup">
+                                        <xcad:LayoutDocument Title="Home" CanClose="False" CanFloat="False" IconSource="/iRadiate.Desktop.Common;component/Images/HomeIcon.png" >
+                                            <xcad:LayoutDocument.Content>
+                                                <v:HomeView x:Name="HomeControl" />
+                                            </xcad:LayoutDocument.Content>
+                                        </xcad:LayoutDocument>
+
+                                    </xcad:LayoutDocumentPane>
+                                </xcad:LayoutDocumentPaneGroup>
+                            </xcad:LayoutPanel>
+                        </xcad:LayoutRoot>
+                    </xcad:DockingManager>
+                </xc:BusyIndicator>
+            </Border>
+
+
+        </DockPanel>
+    </Grid>
+    
+</Controls:MetroWindow>

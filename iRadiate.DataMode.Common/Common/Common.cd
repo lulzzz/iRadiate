@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="iRadiate.DataModel.Common.DataStoreItemAlteration" Collapsed="true">
+    <Position X="1.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAACAAAAAAgAAACAEAAAAAEgCIAAgAAAAQJAEAQ=</HashCode>
+      <FileName>Common\BaseAlteration.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Common.DataStoreItem" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgBAAIFqAICAoAgAoABAFAICgQQAABAQEBABIIAAABA=</HashCode>
+      <FileName>Common\DataStoreItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Common.Person" Collapsed="true">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAIAAIMCABEAAAAAABQARAAAAAAAAAAAUAAA=</HashCode>
+      <FileName>Common\Person.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Common.User" Collapsed="true">
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAACAAAgBBAAAAAAAAAAAAAAAAACIAAAACABIAg=</HashCode>
+      <FileName>Common\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="iRadiate.DataModel.Common.Workstation" Collapsed="true">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Workstation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.Diary.DiaryEntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:conv="clr-namespace:iRadiate.Desktop.Common"
+             xmlns:v="clr-namespace:iRadiate.Desktop.Common.Diary"
+             xmlns:deskView="clr-namespace:iRadiate.Desktop.Common.View"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             
+             mc:Ignorable="d" ToolTipService.HasDropShadow="True" ToolTipService.InitialShowDelay="500"
+             Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ItemsControl}},Path=Width}"
+             ToolTipService.ShowOnDisabled="True"
+             d:DesignHeight="100" d:DesignWidth="340">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:CompletedColorConverter x:Key="CompletionColor"/>
+            <conv:CompletedColorConverterDark x:Key="CompletionColorDark"/>
+            <sys:Int32 x:Key="IntZero">-165</sys:Int32>
+            <sys:Int32 x:Key="IntTen">-155</sys:Int32>
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <UserControl.ToolTip>
+        
+        <deskView:TaskInfoView></deskView:TaskInfoView>
+    </UserControl.ToolTip>
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Assign to">
+                
+                    <ListBox ItemsSource="{Binding Path=Roles}" DisplayMemberPath="Name" SelectedItem="{Binding Path=Role}"/>
+                
+            </MenuItem>
+            <MenuItem Header="Move to">
+                <ListBox ItemsSource="{Binding Path=Rooms}" DisplayMemberPath="Name" SelectedItem="{Binding Path=Room}"/>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+    <Canvas x:Name="MyCanvas" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}},Path=Width}" >
+        <TextBlock x:Name="SchedulingTimeTextBlock" 
+                   Canvas.Left="3"
+                   Canvas.Top="-23"
+                   Background="White"
+                   Foreground="Black"
+                   Text="{Binding Path=SchedulingTime,StringFormat=h:mm tt}"
+                   Visibility="Hidden"
+                   Panel.ZIndex="100"
+                   />
+        <Border  BorderBrush="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverterDark},ConverterParameter=Navy}" 
+                 BorderThickness="1" CornerRadius="3" Width="165" 
+                 
+                  Height="{Binding ElementName=MyCanvas,Path=ActualHeight}"
+                 ><!--Visibility="{Binding Path=Item,Converter={StaticResource FiniteToVisible}}"-->
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Canvas.ZIndex" Value="100"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <DockPanel LastChildFill="True"  Background="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverter},ConverterParameter=LightBlue}"  
+                       
+                Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}}">
+            <Button  HorizontalAlignment="Right" Margin="1,1,3,0" Padding="0" Cursor="Arrow"  
+                    ToolTip="{Binding Path=Description}" x:Name="MenuButton" Click="MenuButton_Click" BorderThickness="0"
+                    DockPanel.Dock="Left" Background="Transparent" BorderBrush="Gray" VerticalAlignment="Top">
+                <Image Source="/iRadiate.Desktop.Common;component/Images/MenuIcon.png" Height="23" Width="23" Margin="0" 
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                       />
+            </Button> 
+                <Popup x:Name="MenuPopup" IsOpen="False" PlacementTarget="{Binding ElementName=MyCanvas}"
+                       Placement="MousePoint" HorizontalOffset="40" LostFocus="MenuPopup_LostFocus" MouseLeave="MenuPopup_MouseLeave">
+                    <Border CornerRadius="3" Padding="0" BorderThickness="1" Background="{StaticResource AlmostWhite}">
+                    <StackPanel Background="Transparent">
+                        <Button   Margin="1,1,1,3"  Cursor="Arrow" Style="{StaticResource CommandButtonStyle}"
+                            ToolTip="View the details of this task"  Command="{Binding Path=ViewDetailsCommand}"
+                                VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal">
+                            <Image Source="/iRadiate.Desktop.Common;component/Images/DetailsIcon.png" Height="30" Width="30" Margin="0" />
+                                    <TextBlock Text="Task Details" FontSize="14" VerticalAlignment="Center" Margin="2,1,1,1"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ActionBarButton"   Margin="1,1,1,3" Cursor="Arrow" Style="{StaticResource CommandButtonStyle}"
+                            ToolTip="Open the action bar" Click="Button_Click"
+                                VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/iRadiate.Desktop.Common;component/Images/ActionIcon.png" Height="30" Width="30" Margin="0" />
+                                    <TextBlock Text="Task Actions" FontSize="14" VerticalAlignment="Center" Margin="2,1,1,1"/>
+                                </StackPanel>
+                            </Button>
+                    </StackPanel>
+                    </Border>
+                </Popup>
+                <Popup x:Name="ActionPopup" IsOpen="False" Placement="MousePoint" PlacementTarget="{Binding ElementName=MyCanvas}" MouseLeave="ActionPopup_MouseLeave">
+                    <StackPanel Background="{StaticResource Charcoal}" Width="120">                       
+
+                        <ListBox ItemsSource="{Binding Path=AvailableActions}" Background="Transparent" BorderThickness="0" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding Path=ExecuteCommand}" BorderThickness="1" Width="96" Margin="2,5,2,5" Height="75" Style="{StaticResource BlackWhiteButton}">
+                                        <TextBlock Text="{Binding Path=Name}" TextWrapping="Wrap" FontSize="14"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Popup>
+                <Popup x:Name="SchedulingTimePopup" IsOpen="False" PlacementTarget="{Binding ElementName=MyCanvas}" Placement="Top" HorizontalOffset="-150">
+                    <TextBlock Text="{Binding Path=SchedulingTime,StringFormat=HH:mm tt}" Background="White" Foreground="Black"/>
+                </Popup>
+            <TextBlock   Foreground="Black" FontSize="12" Margin="0" 
+                        DockPanel.Dock="Top" Text="{Binding Path=Item,Converter={StaticResource ResourceKey=ItemToViewText}}"
+                         />
+                <!---->
+            </DockPanel>
+    </Border>
+        <Line Stroke="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverter},ConverterParameter=Green}" X1="0" 
+              X2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}},Path=Width,Converter={StaticResource DoubleAdditionConverter},ConverterParameter={StaticResource IntZero}}" StrokeThickness="1"
+              Visibility="{Binding Path=Item,Converter={StaticResource NonFiniteToVisible}}"/> <!---->
+              <!--Visibility="{Binding Path=Item,Converter={StaticResource ResourceKey=NonFiniteToVisible}}"-->
+                <Line Stroke="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverter},ConverterParameter=Green}" 
+                      X1="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}},Path=Width,Converter={StaticResource DoubleAdditionConverter},ConverterParameter={StaticResource IntZero}}" 
+                      X2="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}},Path=Width,Converter={StaticResource DoubleAdditionConverter},ConverterParameter={StaticResource IntTen}}" 
+                      Y1="0" 
+                      Y2="10" StrokeThickness="1" 
+              StrokeDashArray="2" StrokeDashOffset="2" Visibility="{Binding Path=Item,Converter={StaticResource NonFiniteToVisible}}"/> <!---->
+        <Border Width="165" CornerRadius="5" BorderBrush="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverterDark},ConverterParameter=DarkGreen}" 
+                BorderThickness="1" 
+                Canvas.Left="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}},Path=Width,Converter={StaticResource DoubleAdditionConverter},ConverterParameter={StaticResource IntZero}}"
+                Canvas.Top="10" 
+                Visibility="{Binding Path=Item,Converter={StaticResource NonFiniteToVisible}}">
+            <!--<Canvas.Left>
+                <Binding Path="Width" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=Canvas}" 
+                                            Converter="{StaticResource IntAditionConverter}">
+                                <Binding.ConverterParameter>
+                                    <sys:Int32>-165</sys:Int32>
+                                </Binding.ConverterParameter>
+                            </Binding>
+            </Canvas.Left>-->
+            
+            <StackPanel Background="{Binding Path=WorkflowStatus,Converter={StaticResource WorkflowStatusColorConverter},ConverterParameter=LightGreen}"  
+                        Orientation="Horizontal" ToolTip="{Binding Path=Description}" >
+                
+                <Button IsEnabled="True" HorizontalAlignment="Right" Margin="1,1,3,0" Padding="0" 
+                        Background="Transparent" BorderBrush="Gray" Click="MenuButton_Click" Cursor="Arrow" BorderThickness="0"
+                        VerticalAlignment="Top">
+                    <Image Source="/iRadiate.Desktop.Common;component/Images/MenuIcon.png" Height="23" Width="23" Margin="0"  />
+                </Button>
+                <TextBlock  Text="{Binding Path=Item,Converter={StaticResource ItemToViewText}}" Foreground="Black" FontSize="12" Margin="0"  /> <!---->
+
+            </StackPanel>
+        </Border>
+    </Canvas>
+</UserControl>

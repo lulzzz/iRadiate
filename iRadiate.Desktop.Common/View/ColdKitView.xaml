@@ -1,0 +1,155 @@
+﻿<UserControl x:Class="iRadiate.Desktop.Common.View.KitView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iRadiate.Desktop.Common.View"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:xcd="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             FontSize="14"
+             d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+           
+
+            <CollectionViewSource x:Key="KitDefinitions"/>
+
+
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TabControl>
+            <TabItem Header="Details">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="206"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Content="Radiopharmaceutical"/>
+                    <ComboBox Grid.Row="0"
+                          Grid.Column="1"
+                          FontSize="14"
+                          Height="30"
+                          Margin="2"
+                          HorizontalAlignment="Stretch"
+                           DisplayMemberPath="Name"
+                  ItemsSource="{Binding Source={StaticResource KitDefinitions}}"
+                   SelectedItem="{Binding Path=Item.KitDefinition}"
+                          />
+                    <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="No. of Vials"/>
+                    <controls:NumericUpDown 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2"
+                     ButtonsAlignment="Right"
+                     FontSize="14"
+                     HasDecimals="False"
+                     HorizontalContentAlignment="Left"
+                    Value="{Binding Path=Item.TotalVials}"/>
+                    <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Content="Remaining Vials"/>
+                    <controls:NumericUpDown Value="{Binding Path=Item.RemainingVials}"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        HasDecimals="False"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="2"/>
+                    <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Content="Expiry Date"/>
+                    <controls:DateTimePicker Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="2"
+                                    Height="30"
+                                    BorderBrush="LightGray"
+                                    SelectedDate="{Binding Path=Item.ExpiryDate}">
+                        <controls:DateTimePicker.ContextMenu>
+                            <ContextMenu >
+                                <MenuItem Header="Now"/>
+                            </ContextMenu>
+                        </controls:DateTimePicker.ContextMenu>
+                    </controls:DateTimePicker>
+                    <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Content="Manufacturer"/>
+                    <TextBox Grid.Row="4"
+                         Grid.Column="1"
+                             Margin="2"
+                         Text="{Binding Path=Item.Manufacturer}"/>
+
+                    <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Content="Mfr Batch Number"/>
+                    <TextBox Grid.Row="5"
+                         Grid.Column="1"
+                             Margin="2"
+                         Text="{Binding Path=Item.ManufacturerBatchNumber}"/>
+
+                    <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Content="Supplier"/>
+                    <TextBox Grid.Row="6"
+                         Grid.Column="1"
+                             Margin="2"
+                         Text="{Binding Path=Item.Supplier}"/>
+                    <Label Grid.Row="7"
+                       Grid.Column="0"
+                       Content="Suppl Lot Number"/>
+                    <TextBox Grid.Row="7"
+                         Grid.Column="1"
+                             Margin="2"
+                         Text="{Binding Path=Item.SupplierBatchNumber}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Bulk Doses">
+                <DataGrid ItemsSource="{Binding Path=Item.BulkDoses}"
+                          
+                          AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date" SortDirection="Descending" Binding="{Binding Path=CreationDate,ConverterCulture='en-AU'}"/>
+                        <DataGridTextColumn Header="User" Binding="{Binding Path=Creator.FullName}"/>
+                        <DataGridTextColumn Header="Activity (MBq)" Binding="{Binding Path=CurrentActivity,StringFormat=F0}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Path=Disposed}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <Button Style="{DynamicResource FlatButtonStyle}" BorderBrush="LightGray"
+                Command="{Binding Path=SaveCommand}"
+                HorizontalAlignment="Right" Grid.Row="1" Background="Transparent" >
+            <iconpacks:Modern Kind="Save" Height="24" Width="24"/>
+        </Button>
+    </Grid>
+
+
+</UserControl>

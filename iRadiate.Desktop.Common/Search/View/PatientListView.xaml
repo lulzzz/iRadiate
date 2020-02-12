@@ -1,0 +1,134 @@
+﻿<UserControl xmlns:View="clr-namespace:iRadiate.Desktop.Common.View;assembly=iRadiate.Desktop.Common"  x:Class="iRadiate.Desktop.Search.View.PatientListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xcad="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:desk="clr-namespace:iRadiate.Desktop.Common;assembly=iRadiate.Desktop.Common"
+             mc:Ignorable="d" 
+             PreviewKeyDown="UserControl_PreviewKeyDown"
+             d:DesignHeight="900" d:DesignWidth="1100">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+           
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding Path=GetDataCommand}"/>
+    </UserControl.InputBindings>
+    <xcad:BusyIndicator IsBusy="{Binding Path=Busy}">
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+             
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="135"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <Label FontSize="20" FontWeight="SemiBold" Content="Search Criteria" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Label Content="Surname" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="14"/>
+                <Label Content="GivenNames" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="14"/>
+                <Label Content="MRN" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox Name="SunameTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Path=SurnameSearch,UpdateSourceTrigger=PropertyChanged}" Margin="1,1,5,1" FontSize="14" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Path=GivenNamesSearch,UpdateSourceTrigger=PropertyChanged}" Margin="1,1,5,1" FontSize="14" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Path=MrnSearch,UpdateSourceTrigger=PropertyChanged}" Margin="1,1,5,1" FontSize="14" VerticalContentAlignment="Center"/>
+                <Button Grid.Row="4" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Left" 
+                        Margin="2" 
+                        IsDefault="True"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" 
+                        Height="48"
+                        Width="148"
+                       FontSize="18"
+                        Content="Search"
+                        Command="{Binding Path=SearchCommand}" >
+                    
+                </Button>
+               
+            </Grid>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <Button Style="{DynamicResource MetroFlatButtonStyle}"
+                        Command="{Binding Path=ViewPatientCommand}"
+                        IsEnabled="{Binding Path=PatientSelected}"
+                        ToolTip="View patient details"
+                        Margin="2"
+                        Padding="3"
+                        Background="Transparent"
+                        BorderBrush="LightGray">
+                    <iconPacks:Material Kind="Account" Height="24" Width="24"/>
+                </Button>
+                <Button Style="{DynamicResource MetroFlatButtonStyle}"
+                        Command="{Binding AddPatientCommand}"
+                        Margin="2"
+                        ToolTip="Add patient"
+                        Padding="3"
+                        Background="Transparent"
+                        BorderBrush="LightGray">
+                    <iconPacks:Entypo  Kind="AddToList" Height="24" Width="24"/>
+                </Button>
+                <Button Style="{DynamicResource MetroFlatButtonStyle}"
+                        Command="{Binding ViewScanbagCommand}"
+                        Margin="2"
+                        ToolTip="View scanbag"
+                        Padding="3"
+                        Background="Transparent"
+                        BorderBrush="LightGray">
+                    <iconPacks:Modern  Kind="FolderPeople" Height="24" Width="24"/>
+                </Button>
+            </StackPanel>
+            
+
+            <DataGrid 
+                    Grid.Row="2"
+                    IsSynchronizedWithCurrentItem="True"
+                    ItemsSource="{Binding Path=Patients}" 
+                    SelectedItem="{Binding Path=SelectedPatient}"  
+                
+                    IsReadOnly="True"
+                   EnableRowVirtualization="True"
+                   GridLinesVisibility="All"
+                          CanUserAddRows="False"
+                          AutoGenerateColumns="False">
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Path=ViewPatientCommand}"/>
+                </DataGrid.InputBindings>
+                
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Header="Surname" FontSize="14" Binding="{Binding Path=Surname}"/>
+                    <DataGridTextColumn Header="Given Names" FontSize="14" Binding="{Binding Path=GivenNames}"/>
+                    <DataGridTextColumn Header="MRN" FontSize="14" Binding="{Binding Path=MRN}"/>
+                    <DataGridTextColumn Header="Age" FontSize="14" Binding="{Binding Path=Age}"/>
+                    <DataGridTextColumn Header="Sex" FontSize="14" Binding="{Binding Path=Gender}"/>
+                        
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            
+            
+
+        </Grid>
+    </xcad:BusyIndicator>
+</UserControl>

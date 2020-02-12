@@ -1,0 +1,183 @@
+﻿<UserControl xmlns:Diary="clr-namespace:iRadiate.Desktop.Common.Diary"  x:Class="iRadiate.Desktop.Common.Diary.DiaryEntryHolderView"
+             xmlns:Desktop="clr-namespace:iRadiate.Desktop.Common"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="820" d:DesignWidth="400" DragOver="UserControl_DragOver" MouseEnter="DiaryEntryViewHolder_MouseEnter"
+             AllowDrop="True" MouseLeave="DiaryEntryViewHolder_MouseLeave" Drop="UserControl_Drop" Name="ViewHolderControl" >
+    <UserControl.Resources>
+       
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/iRadiate.Desktop.Common;component/Themes/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Diary:Ticker x:Key="Ticker"/>
+            
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <DockPanel >
+            <DockPanel DockPanel.Dock="Top" >
+                <xcad:IntegerUpDown Minimum="100" Maximum="450" Width="70" HorizontalAlignment="Left" Value="{Binding Path=Width}" IsReadOnly="False" />
+                <xcad:IntegerUpDown Minimum="0" Maximum="20" Width="50" HorizontalAlignment="Left" Value="{Binding Path=Order}" IsReadOnly="False" Visibility="Collapsed" />
+                <xcad:TimePicker Value="{Binding Path=StartTime}" EndTime="{Binding Path=MaxEnd}" StartTime="{Binding Path=MinStart}" 
+                             TimeInterval="0:15:0"  ShowButtonSpinner="False" Width="85" FormatString="{}{hh:mm tt}" 
+                             Visibility="{Binding Path=SliderVisible,Converter={StaticResource BoolToVis}}" DockPanel.Dock="Left"/>
+                <xcad:RangeSlider x:Name="MyRangeSlider" Minimum="{Binding Path=MinStart,Converter={StaticResource DateTimeToDouble}}" Width="100"
+                          Maximum="{Binding Path=MaxEnd,Converter={StaticResource DateTimeToDouble}}" 
+                          HigherValue="{Binding Path=EndTime,Converter={StaticResource DateTimeToDouble}}" 
+                          LowerValue="{Binding Path=StartTime,Converter={StaticResource DateTimeToDouble}}" Margin="3"
+                              Visibility="{Binding Path=SliderVisible,Converter={StaticResource BoolToVis}}" DockPanel.Dock="Left"/>
+                <xcad:TimePicker Value="{Binding Path=EndTime}" EndTime="{Binding Path=MaxEnd}" StartTime="{Binding Path=MinStart}" 
+                             TimeInterval="0:15:0"  ShowButtonSpinner="False" Width="85" FormatString="{}{hh:mm tt}"
+                             Visibility="{Binding Path=SliderVisible,Converter={StaticResource BoolToVis}}" DockPanel.Dock="Left"/>
+                <Label Content="Width" FontSize="14" Visibility="Hidden"/>
+                
+            </DockPanel>
+
+            <DockPanel  DockPanel.Dock="Top" >
+
+                <Border x:Name="Timepanel" BorderBrush="Navy" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top" DockPanel.Dock="Left" >
+                    <ItemsControl ItemsSource="{Binding Path=Ticks}" Background="AntiqueWhite" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate >
+                                <Canvas Height="800" Width="50" Background="LightGray">
+                                    <Canvas.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="AutoArrange" IsCheckable="False" Command="{Binding Path=AutoArrangeCommand}"/>
+                                        </ContextMenu>
+                                    </Canvas.ContextMenu>
+                                </Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                                <Setter Property="Width" Value="{Binding Path=Width}"/>
+                                <Setter Property="Canvas.Left" Value="0"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0"/>
+
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Line Stroke="Gray" StrokeThickness="2" Margin="0"  X1="20" X2="48" Y1="1" Y2="1"  />
+                                    <TextBlock VerticalAlignment="Top"  Text="{Binding Path=TickTime,StringFormat={}{0: h:mm tt}}" 
+                                           FontSize="12" Height="20"  HorizontalAlignment="Right" Margin="0" Padding="0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </Border>
+                <Border  BorderBrush="Navy" BorderThickness="2" CornerRadius="5" Panel.ZIndex="1" x:Name="DiaryCanvas" DockPanel.Dock="Left" 
+                         Background="{Binding Path=IsEditable,Converter={StaticResource EditableColorConverter}}" HorizontalAlignment="Left">
+                    <Canvas>
+                       
+                        <Canvas.Width>
+                            <Binding Path="Width"
+                                            Converter="{StaticResource IntAditionConverter}">
+                                <Binding.ConverterParameter>
+                                    <sys:Int32>-55</sys:Int32>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </Canvas.Width>
+                        <Line X1="0" X2="{Binding Path=Width}" Stroke="Black" StrokeThickness="2"  >
+                            <Line.Y1>
+                                <MultiBinding Converter="{StaticResource ScheduleTimeToTop}" >
+                                    <Binding Source="{StaticResource Ticker}" Path="Now"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"/>
+
+                                </MultiBinding> 
+                            </Line.Y1>
+                            <Line.Y2>
+                                <MultiBinding Converter="{StaticResource ScheduleTimeToTop}">
+                                    <Binding Source="{StaticResource Ticker}" Path="Now"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"/>
+
+                                </MultiBinding>
+                            </Line.Y2>
+                        </Line>
+                    <ItemsControl ItemsSource="{Binding Path=TasksView}" Height="800"  HorizontalAlignment="Left"   Padding="0" >
+                        <ItemsControl.Width>
+                            <Binding Path="Width"
+                                            Converter="{StaticResource IntAditionConverter}">
+                                <Binding.ConverterParameter>
+                                    <sys:Int32>-55</sys:Int32>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </ItemsControl.Width>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="TaskCanvas">
+                                    
+                                </Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Canvas.ZIndex"  Value="100"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                                <Setter Property="Canvas.Top">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource ScheduleTimeToTop}">
+                                            <Binding Path="SchedulingTime"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}" Path="DataContext"/>
+
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Canvas.Left" Value="{Binding Path=Left,Mode=TwoWay}" />
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+
+                                <Setter Property="Height">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource DurationToHeight}">
+                                            <Binding Path="Duration" Mode="OneWay"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}" Path="DataContext"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Visibility">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource TaskOutOfRange}">
+                                            <Binding Path="SchedulingTime" Mode="OneWay"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}" Path="DataContext"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Diary:DiaryEntryView MouseMove="DiaryEntryView_MouseMove" 
+                                                      MouseLeave="DiaryEntryView_MouseLeave" 
+                                                      MouseLeftButtonDown="DiaryEntryView_MouseLeftButtonDown" 
+                                                      MouseLeftButtonUp="DiaryEntryView_MouseLeftButtonUp" 
+                                                      HorizontalAlignment="Left" 
+                                                      MouseRightButtonDown="DiaryEntryView_MouseRightButtonDown"
+                                                      IsEnabled="{Binding ElementName=EditToggle,Path=IsChecked}">
+
+                                </Diary:DiaryEntryView>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    </Canvas>
+                </Border>
+            </DockPanel>
+        </DockPanel>
+
+    </ScrollViewer>
+
+</UserControl>
